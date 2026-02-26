@@ -8,58 +8,62 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#fff;
-      --text:#111114;
-      --muted: rgba(17,17,20,.62);
+      --bg:#ffffff;
+      --text:#0f0f12;
+      --muted: rgba(15,15,18,.62);
+      --line: rgba(15,15,18,.10);
     }
     *{box-sizing:border-box;}
     body{
       margin:0;
       font-family: Montserrat, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      font-weight: 600; /* semi-bold по умолчанию */
+      font-weight: 600; /* semibold */
       background: var(--bg);
       color: var(--text);
     }
 
+    /* Full width, но с аккуратным воздухом как в рефе */
     .wrap{width:100%; margin:0; padding:0;}
+    .pad{padding: 26px 18px;}
 
-    /* TOP */
-    .top{padding: 30px 20px 16px;}
+    /* Header (чисто) */
     .head{
       display:flex;
       align-items:center;
       justify-content:space-between;
+      gap: 14px;
       font-size: 12px;
       letter-spacing: .10em;
       text-transform: uppercase;
-      font-weight: 600; /* semi-bold */
-      color: rgba(17,17,20,.72);
+      color: rgba(15,15,18,.55);
     }
-    .brand{letter-spacing: .12em; color: var(--text);}
-    .wa{color: rgba(17,17,20,.72);}
+    .brand{
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: var(--text);
+    }
+    .wa{
+      color: rgba(15,15,18,.55);
+    }
 
-    /* TITLE (мобилка: “как на фото”) */
+    /* Title block (как Bocaroom, но белый) */
+    .hero{
+      padding-top: 22px;
+      padding-bottom: 18px;
+    }
     .hero-title{
-      margin: 18px 0 0;
+      margin: 0;
       text-transform: uppercase;
-      font-weight: 700; /* заголовок чуть плотнее */
+      font-weight: 700;
       letter-spacing: -0.02em;
-      line-height: .96;
-      font-size: clamp(36px, 9.2vw, 60px);
+      line-height: 1.03;
+      font-size: clamp(34px, 7.4vw, 58px);
+      max-width: 18ch;
     }
-    .tline{display:block;}
-    .tspace{
-      display:flex;
-      align-items: baseline;
-      justify-content: space-between; /* разносит 500 000 и СОМ */
-      gap: 16px;
-    }
-
-    /* Подчёркивание 500 000 */
     .u{
       position: relative;
       display:inline-block;
@@ -73,117 +77,112 @@
       bottom: -0.12em;
       height: 0.10em;
       border-radius: 999px;
-      background: rgba(17,17,20,.16);
+      background: rgba(15,15,18,.14);
     }
 
-    .subtitle{
-      margin-top: 22px;
-      max-width: 46ch;
-      font-size: 18px;
-      line-height: 1.6;
-      font-weight: 500;
-      color: var(--muted);
-    }
-
-    /* BENEFITS (мобилка: слева/центр/справа одной линией) */
-    .benefits{
+    .hero-text{
       margin-top: 18px;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 10px;
-      width: 100%;
-      font-size: 12px;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: rgba(17,17,20,.72);
+      max-width: 54ch;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(15,15,18,.64);
     }
-    .benefits span:nth-child(2){text-align:center; flex:1;}
-    .benefits span:first-child{flex:1; text-align:left;}
-    .benefits span:last-child{flex:1; text-align:right;}
+    .hero-text b{
+      font-weight: 700;
+      color: rgba(15,15,18,.88);
+      border-bottom: 1px solid rgba(15,15,18,.22);
+      padding-bottom: 2px;
+    }
 
-    /* PHOTO */
+    /* Фото */
     .photo-area{
       position: relative;
       width: 100%;
-      height: min(58vh, 520px);
-      min-height: 360px;
-      background: #e9e9ea;
-      overflow: hidden;
+      padding: 0 18px 22px;
     }
-    .photo-area img{
-      width:100%;
-      height:100%;
+    .photo{
+      width: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #ececec;
+      position: relative;
+      aspect-ratio: 3/2;
+      min-height: 360px;
+    }
+    .photo img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
       object-fit: cover;
       display:block;
-      transform: scale(1.02);
       filter: saturate(.98) contrast(1.02);
+      transform: scale(1.01);
     }
 
-    /* GLASS FORM (как на скрине) */
+    /* Лидформа над фото — стекло, но читабельно */
     .lead-glass{
       position:absolute;
-      left: 16px;
-      right: 16px;
-      bottom: 16px;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
 
-      border-radius: 28px;
-      padding: 18px 18px 14px;
+      border-radius: 26px;
+      padding: 16px 16px 14px;
 
-      background: rgba(18,18,20,.44);
-      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.52);
+      border: 1px solid rgba(15,15,18,.10);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 18px 60px rgba(0,0,0,.24);
+      box-shadow: 0 18px 60px rgba(0,0,0,.12);
 
-      color: rgba(255,255,255,.92);
+      color: rgba(15,15,18,.92);
     }
     .lead-title{
       font-weight: 700;
-      letter-spacing: .10em;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      font-size: 13px;
+      font-size: 12px;
+      color: rgba(15,15,18,.78);
     }
     .lead-note{
       margin-top: 8px;
-      font-size: 15px;
-      line-height: 1.45;
+      font-size: 14px;
+      line-height: 1.5;
       font-weight: 500;
-      color: rgba(255,255,255,.84);
+      color: rgba(15,15,18,.78);
     }
 
     .lead-form{
-      margin-top: 14px;
+      margin-top: 12px;
       display:grid;
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 10px;
     }
     .field{
       width:100%;
-      border-radius: 18px;
-      padding: 16px 16px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.10);
-      color: rgba(255,255,255,.94);
+      border-radius: 16px;
+      padding: 14px 14px;
+      border: 1px solid rgba(15,15,18,.14);
+      background: rgba(255,255,255,.78);
+      color: rgba(15,15,18,.92);
       outline:none;
       font-weight: 500;
-      font-size: 18px;
+      font-size: 16px;
     }
-    .field::placeholder{color: rgba(255,255,255,.70); font-weight: 500;}
-    .field:focus{border-color: rgba(255,255,255,.34); background: rgba(255,255,255,.12);}
+    .field::placeholder{color: rgba(15,15,18,.45); font-weight: 500;}
+    .field:focus{border-color: rgba(15,15,18,.26);}
 
     .btn{
       width:100%;
       border-radius: 999px;
-      padding: 16px 18px;
-      font-weight: 800;
+      padding: 14px 16px;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: .10em;
-      font-size: 14px;
-      border: 1px solid rgba(255,255,255,.22);
-      background: rgba(255,255,255,.92);
-      color: rgba(10,10,12,.92);
+      font-size: 12px;
+      border: 1px solid rgba(15,15,18,.10);
+      background: rgba(15,15,18,.92);
+      color: #fff;
       cursor:pointer;
       transition: transform .12s ease, opacity .12s ease;
       user-select:none;
@@ -191,34 +190,101 @@
     .btn:active{transform: translateY(1px) scale(.99);}
 
     .status{
-      margin-top: 10px;
+      margin-top: 8px;
       font-weight: 700;
       font-size: 13px;
       display:none;
     }
 
     .policies{
-      margin-top: 12px;
+      margin-top: 10px;
       font-size: 11px;
       font-weight: 500;
-      color: rgba(255,255,255,.62);
+      color: rgba(15,15,18,.56);
       line-height: 1.35;
     }
     .policies a{
-      color: rgba(255,255,255,.80);
+      color: rgba(15,15,18,.78);
       text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,.18);
+      border-bottom: 1px solid rgba(15,15,18,.18);
     }
-    .policies a:hover{border-bottom-color: rgba(255,255,255,.40);}
+    .policies a:hover{border-bottom-color: rgba(15,15,18,.34);}
 
-    /* DESKTOP чуть иначе, чтобы не ломалось */
+    /* Popup modal (privacy/terms) */
+    .modal-backdrop{
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.38);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 80;
+    }
+    .modal-backdrop.open{display:flex;}
+    .modal{
+      width: min(860px, 100%);
+      max-height: min(80vh, 720px);
+      overflow: hidden;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(15,15,18,.12);
+      box-shadow: 0 30px 90px rgba(0,0,0,.22);
+      display:flex;
+      flex-direction: column;
+    }
+    .modal-header{
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border-bottom: 1px solid rgba(15,15,18,.10);
+    }
+    .modal-title{
+      font-weight: 700;
+      letter-spacing: .02em;
+      font-size: 16px;
+      color: rgba(15,15,18,.92);
+    }
+    .modal-close{
+      width: 40px; height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(15,15,18,.12);
+      background: #fff;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .modal-body{
+      padding: 16px;
+      overflow: auto;
+      font-weight: 500;
+      color: rgba(15,15,18,.78);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+    .modal-body h3{
+      margin: 10px 0 6px;
+      font-weight: 700;
+      color: rgba(15,15,18,.90);
+      font-size: 14px;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+    .modal-body ul{padding-left: 18px; margin: 8px 0;}
+    .modal-body li{margin: 6px 0;}
+
     @media (min-width: 900px){
-      .top{padding: 34px 28px 18px;}
-      .hero-title{font-size: clamp(48px, 5.8vw, 84px); max-width: 16ch;}
-      .subtitle{font-size: 16px; max-width: 62ch; margin-top: 18px;}
-      .benefits{max-width: 520px;}
-      .lead-glass{left: 28px; right: auto; width: 660px;}
-      .photo-area{height: min(58vh, 540px);}
+      .pad{padding: 34px 28px;}
+      .photo-area{padding: 0 28px 28px;}
+      .photo{border-radius: 26px; aspect-ratio: 16/9;}
+      .lead-glass{
+        left: 18px; right: auto; bottom: 18px;
+        width: 620px;
+      }
     }
   </style>
 </head>
@@ -226,74 +292,123 @@
 <body>
   <div class="wrap">
 
-    <section class="top">
+    <section class="pad">
       <div class="head">
         <div class="brand">FOT</div>
         <div class="wa">WHATSAPP</div>
       </div>
 
-      <!-- Заголовок “как на фото” (ручные переносы + разнос 500 000 / СОМ) -->
-      <h1 class="hero-title" aria-label="Дизайн, который экономит до 500 000 сом на ремонте">
-        <span class="tline">ДИЗАЙН,</span>
-        <span class="tline">КОТОРЫЙ ЭКОНОМИТ</span>
-        <span class="tline">ДО</span>
-        <span class="tline tspace">
-          <span class="u">500 000</span>
-          <span>СОМ</span>
-        </span>
-        <span class="tline">НА</span>
-        <span class="tline">РЕМОНТЕ</span>
-      </h1>
+      <div class="hero">
+        <h1 class="hero-title">
+          ДИЗАЙН,<br>
+          КОТОРЫЙ ЭКОНОМИТ ДО <span class="u">500&nbsp;000&nbsp;СОМ</span><br>
+          НА РЕМОНТЕ
+        </h1>
 
-      <p class="subtitle">
-        Полный расчет сметы от материалов до мебели + комплектация в подарок.
-      </p>
-
-      <div class="benefits" aria-label="Преимущества">
-        <span>РАСЧЁТ</span>
-        <span>ДЕТАЛИЗАЦИЯ</span>
-        <span>ГАРАНТИЯ</span>
+        <p class="hero-text">
+          Полный расчет сметы от материалов до мебели + комплектация в подарок.
+        </p>
       </div>
     </section>
 
     <section class="photo-area">
-      <!-- ЗАМЕНИ НА СВОЮ КАРТИНКУ -->
-      <img src="https://images.unsplash.com/photo-1549187774-b4e9b0445b41?auto=format&fit=crop&w=2400&q=80" alt="FOT интерьер" />
+      <div class="photo">
+        <!-- ЗАМЕНИ НА СВОЮ КАРТИНКУ -->
+        <img src="https://images.unsplash.com/photo-1549187774-b4e9b0445b41?auto=format&fit=crop&w=2400&q=80" alt="FOT интерьер" />
 
-      <div class="lead-glass">
-        <div class="lead-title">FREE CONSULTATION</div>
-        <div class="lead-note">Оставьте имя и номер — сделаем быстрый расчёт и сориентируем по бюджету.</div>
+        <div class="lead-glass">
+          <div class="lead-title">FREE CONSULTATION</div>
+          <div class="lead-note">Оставьте имя и номер — сделаем быстрый расчёт и сориентируем по бюджету.</div>
 
-        <form class="js-lead-form" data-form-name="hero">
-          <div class="lead-form">
-            <input class="field" name="name" placeholder="Ваше имя" autocomplete="name" />
-            <input class="field" name="phone" placeholder="Телефон *" autocomplete="tel" required />
-            <button class="btn" type="submit">ОТПРАВИТЬ</button>
-          </div>
+          <form class="js-lead-form" data-form-name="hero">
+            <div class="lead-form">
+              <input class="field" name="name" placeholder="Ваше имя" autocomplete="name" />
+              <input class="field" name="phone" placeholder="Телефон *" autocomplete="tel" required />
+              <button class="btn" type="submit">ОТПРАВИТЬ</button>
+            </div>
 
-          <div class="status js-status"></div>
+            <div class="status js-status"></div>
 
-          <div class="policies">
-            Нажимая “Отправить”, вы соглашаетесь с
-            <a href="/privacy.html" target="_blank" rel="noopener">Политикой конфиденциальности</a>
-            и
-            <a href="/terms.html" target="_blank" rel="noopener">Условиями использования</a>.
-          </div>
-        </form>
+            <div class="policies">
+              Нажимая “Отправить”, вы соглашаетесь с
+              <a href="#" data-open="privacyModal">Политикой конфиденциальности</a>
+              и
+              <a href="#" data-open="termsModal">Условиями использования</a>.
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
   </div>
 
+  <!-- PRIVACY MODAL -->
+  <div class="modal-backdrop" id="privacyModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+      <div class="modal-header">
+        <div class="modal-title" id="privacyTitle">Политика конфиденциальности</div>
+        <button class="modal-close" data-close="privacyModal" aria-label="Закрыть">✕</button>
+      </div>
+      <div class="modal-body">
+        <h3>1. Общие положения</h3>
+        <p>Мы бережно относимся к вашим данным и используем их только для связи по вашей заявке.</p>
+
+        <h3>2. Какие данные собираем</h3>
+        <ul>
+          <li>Имя и номер телефона, которые вы указали в форме.</li>
+          <li>Технические данные (например, тип устройства) — только в рамках стандартной аналитики сайта.</li>
+        </ul>
+
+        <h3>3. Цель обработки</h3>
+        <ul>
+          <li>Связаться с вами по заявке.</li>
+          <li>Уточнить детали проекта и подготовить расчет.</li>
+        </ul>
+
+        <h3>4. Хранение и защита</h3>
+        <p>Доступ к данным ограничен. Мы не продаём и не передаём данные третьим лицам, кроме случаев, предусмотренных законом.</p>
+
+        <h3>5. Контакты</h3>
+        <p>Если хотите удалить или уточнить данные — напишите нам в WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMS MODAL -->
+  <div class="modal-backdrop" id="termsModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+      <div class="modal-header">
+        <div class="modal-title" id="termsTitle">Условия использования</div>
+        <button class="modal-close" data-close="termsModal" aria-label="Закрыть">✕</button>
+      </div>
+      <div class="modal-body">
+        <h3>1. Использование сайта</h3>
+        <p>Сайт носит информационный характер. Отправляя заявку, вы подтверждаете, что предоставляете достоверные данные.</p>
+
+        <h3>2. Заявка и обратная связь</h3>
+        <ul>
+          <li>Мы связываемся с вами по указанному номеру.</li>
+          <li>Срок ответа зависит от загруженности, обычно в течение рабочего дня.</li>
+        </ul>
+
+        <h3>3. Ограничение ответственности</h3>
+        <p>Итоговая стоимость проекта зависит от исходных данных, площади, пожеланий и бюджета.</p>
+
+        <h3>4. Изменения условий</h3>
+        <p>Мы можем обновлять эти условия. Актуальная версия всегда доступна на сайте.</p>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // DEMO submit (пока без реальной отправки)
+    // Demo submit
     const form = document.querySelector('.js-lead-form');
     const statusEl = document.querySelector('.js-status');
 
     const showStatus = (ok, text) => {
       statusEl.style.display = 'block';
       statusEl.textContent = text;
-      statusEl.style.color = ok ? 'rgba(220,255,230,.98)' : 'rgba(255,220,220,.98)';
+      statusEl.style.color = ok ? 'rgba(5,120,60,.92)' : 'rgba(176,0,32,.92)';
     };
 
     form.addEventListener('submit', async (e) => {
@@ -317,6 +432,34 @@
 
       btn.disabled = false;
       btn.textContent = old;
+    });
+
+    // Modals: open/close
+    const openModal = (id) => document.getElementById(id)?.classList.add('open');
+    const closeModal = (id) => document.getElementById(id)?.classList.remove('open');
+
+    document.addEventListener('click', (e) => {
+      const openBtn = e.target.closest('[data-open]');
+      const closeBtn = e.target.closest('[data-close]');
+
+      if (openBtn){
+        e.preventDefault();
+        openModal(openBtn.getAttribute('data-open'));
+      }
+
+      if (closeBtn){
+        closeModal(closeBtn.getAttribute('data-close'));
+      }
+
+      if (e.target.classList.contains('modal-backdrop')){
+        e.target.classList.remove('open');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape'){
+        document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+      }
     });
   </script>
 </body>
