@@ -8,16 +8,14 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Шрифт максимально близкий к референсу: крупный, геометричный, читаемый -->
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #ffffff;
-      --text: #111114;
+      --bg:#fff;
+      --text:#111114;
       --muted: rgba(17,17,20,.62);
     }
-
     *{box-sizing:border-box;}
     body{
       margin:0;
@@ -26,43 +24,42 @@
       color: var(--text);
     }
 
-    /* Без ограничений по ширине — весь экран */
-    .wrap{
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
+    /* FULL WIDTH layout */
+    .wrap{width:100%; margin:0; padding:0;}
 
-    /* Верх: текстовый блок как на примере */
+    /* HEADER */
     .top{
-      padding: 34px 28px 22px;
+      padding: 30px 28px 18px;
     }
-
-    .mini-row{
+    .head{
       display:flex;
       align-items:center;
-      justify-content: space-between;
+      justify-content:space-between;
       gap: 16px;
       font-size: 12px;
       letter-spacing: .10em;
       text-transform: uppercase;
-      font-weight: 800;
+      font-weight: 900;
+      color: rgba(17,17,20,.72);
+    }
+    .brand{
+      font-weight: 1000;
+      letter-spacing: .12em;
+      color: var(--text);
+    }
+    .wa{
       color: rgba(17,17,20,.72);
     }
 
-    .logo{
-      font-weight: 1000;
-      letter-spacing: .08em;
-      color: var(--text);
-    }
-
+    /* HERO TEXT */
     .hero-title{
-      margin: 26px 0 0;
+      margin: 22px 0 0;
       text-transform: uppercase;
       font-weight: 1000;
       letter-spacing: -0.03em;
-      line-height: .95;
-      font-size: clamp(40px, 6.2vw, 88px);
+      line-height: .92;
+      font-size: clamp(40px, 6.1vw, 86px);
+      max-width: 14.5ch; /* делает композицию более “премиальной” */
     }
 
     .subrow{
@@ -81,30 +78,23 @@
       color: var(--muted);
     }
 
-    .pill-actions{
+    /* 3 пункта справа — без обводок */
+    .benefits{
       display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content:flex-end;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
+      flex-direction: column;
       gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(17,17,20,.10);
-      background: rgba(255,255,255,.75);
-      font-weight: 900;
+      align-items:flex-end;
+      min-width: 220px;
+    }
+    .benefits span{
       font-size: 12px;
-      letter-spacing: .06em;
+      letter-spacing: .10em;
       text-transform: uppercase;
-      color: rgba(17,17,20,.82);
-      user-select:none;
+      font-weight: 1000;
+      color: rgba(17,17,20,.72);
     }
 
-    /* Фото снизу на всю ширину */
+    /* PHOTO */
     .photo-area{
       position: relative;
       width: 100%;
@@ -114,43 +104,42 @@
       overflow: hidden;
     }
     .photo-area img{
-      width: 100%;
-      height: 100%;
+      width:100%;
+      height:100%;
       object-fit: cover;
       display:block;
       transform: scale(1.02);
       filter: saturate(.98) contrast(1.02);
     }
 
-    /* Лидформа поверх фото (стекло) */
+    /* GLASS LEAD — читабельно */
     .lead-glass{
-      position: absolute;
+      position:absolute;
       left: 28px;
       bottom: 22px;
-      width: min(620px, calc(100% - 56px));
+      width: min(660px, calc(100% - 56px));
       border-radius: 22px;
       padding: 16px 16px 14px;
 
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.30);
+      /* темнее и плотнее, чтобы читалось */
+      background: rgba(10,10,12,.46);
+      border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-
-      box-shadow: 0 18px 60px rgba(0,0,0,.20);
+      box-shadow: 0 18px 60px rgba(0,0,0,.22);
       color: rgba(255,255,255,.92);
     }
-
     .lead-title{
       font-weight: 1000;
-      letter-spacing: .02em;
+      letter-spacing: .10em;
       text-transform: uppercase;
-      font-size: 14px;
+      font-size: 12px;
     }
     .lead-note{
       margin-top: 6px;
       font-size: 13px;
       line-height: 1.45;
-      color: rgba(255,255,255,.82);
+      color: rgba(255,255,255,.84);
     }
 
     .lead-form{
@@ -159,32 +148,32 @@
       grid-template-columns: 1fr 1fr auto;
       gap: 10px;
     }
-
     .field{
-      width: 100%;
+      width:100%;
       border-radius: 14px;
       padding: 12px 12px;
-      border: 1px solid rgba(255,255,255,.26);
-      background: rgba(255,255,255,.14);
-      color: rgba(255,255,255,.92);
-      outline: none;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.94);
+      outline:none;
     }
     .field::placeholder{color: rgba(255,255,255,.72);}
-    .field:focus{border-color: rgba(255,255,255,.45);}
+    .field:focus{border-color: rgba(255,255,255,.34); background: rgba(255,255,255,.12);}
 
     .btn{
       border-radius: 999px;
       padding: 12px 16px;
       font-weight: 1000;
       text-transform: uppercase;
-      letter-spacing: .08em;
+      letter-spacing: .10em;
       font-size: 12px;
-      border: 1px solid rgba(255,255,255,.30);
-      background: rgba(17,17,20,.82);
-      color: #fff;
-      cursor: pointer;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.92);
+      color: rgba(10,10,12,.92);
+      cursor:pointer;
       transition: transform .12s ease, opacity .12s ease;
       user-select:none;
+      white-space: nowrap;
     }
     .btn:active{transform: translateY(1px) scale(.99);}
 
@@ -195,25 +184,44 @@
       display:none;
     }
 
-    .small-legal{
+    /* Policies — “как мета просит”, но не портит */
+    .policies{
       margin-top: 10px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
       font-size: 11px;
-      color: rgba(255,255,255,.72);
-      line-height: 1.45;
+      color: rgba(255,255,255,.70);
+      line-height: 1.35;
+    }
+    .policies a{
+      color: rgba(255,255,255,.86);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,.20);
+    }
+    .policies a:hover{
+      border-bottom-color: rgba(255,255,255,.45);
+    }
+    .policies .dot{
+      opacity:.5;
+    }
+
+    @media (max-width: 820px){
+      .top{padding: 24px 16px 14px;}
+      .benefits{align-items:flex-start; min-width: auto;}
+      .subrow{gap: 14px;}
     }
 
     @media (max-width: 760px){
-      .top{padding: 26px 18px 18px;}
       .photo-area{height: min(62vh, 560px);}
-
       .lead-glass{
         left: 14px;
         bottom: 14px;
         width: calc(100% - 28px);
       }
-      .lead-form{grid-template-columns: 1fr; }
-      .pill-actions{justify-content:flex-start;}
-      .mini-row{gap:10px; font-size: 11px;}
+      .lead-form{grid-template-columns: 1fr;}
+      .hero-title{max-width: 20ch; line-height: .95;}
     }
   </style>
 </head>
@@ -222,13 +230,9 @@
   <div class="wrap">
 
     <section class="top">
-      <div class="mini-row">
-        <div>MENU</div>
-        <div class="logo">FOT</div>
-        <div style="display:flex; gap:16px; align-items:center;">
-          <div>WHATSAPP</div>
-          <div>+996 XXX XX XX XX</div>
-        </div>
+      <div class="head">
+        <div class="brand">FOT</div>
+        <div class="wa">WHATSAPP</div>
       </div>
 
       <h1 class="hero-title">
@@ -238,35 +242,39 @@
       <div class="subrow">
         <p class="subtitle">
           Полный расчет сметы от материалов до мебели + комплектация в подарок.
-          Делаем интерьер так, чтобы ремонт прошёл спокойно и без переделок.
         </p>
 
-        <div class="pill-actions">
-          <div class="pill">FUNCTIONALITY</div>
-          <div class="pill">BUDGET FLEXIBILITY</div>
-          <div class="pill">MATERIAL QUALITY</div>
+        <div class="benefits" aria-label="Преимущества">
+          <span>РАСЧЁТ</span>
+          <span>ДЕТАЛИЗАЦИЯ</span>
+          <span>ГАРАНТИЯ</span>
         </div>
       </div>
     </section>
 
     <section class="photo-area">
-      <!-- ЗАМЕНИ НА СВОЮ КАРТИНКУ (как на скрине) -->
+      <!-- ЗАМЕНИ НА СВОЮ КАРТИНКУ -->
       <img src="https://images.unsplash.com/photo-1549187774-b4e9b0445b41?auto=format&fit=crop&w=2400&q=80" alt="FOT интерьер" />
 
-      <!-- СТЕКЛЯННАЯ ЛИДФОРМА -->
       <div class="lead-glass">
-        <div class="lead-title">БЕСПЛАТНАЯ КОНСУЛЬТАЦИЯ</div>
-        <div class="lead-note">Оставьте имя и номер — сделаем быстрый расчёт и подскажем по бюджету.</div>
+        <div class="lead-title">FREE CONSULTATION</div>
+        <div class="lead-note">Оставьте имя и номер — сделаем быстрый расчёт и сориентируем по бюджету.</div>
 
         <form class="js-lead-form" data-form-name="hero">
           <div class="lead-form">
             <input class="field" name="name" placeholder="Ваше имя" autocomplete="name" />
             <input class="field" name="phone" placeholder="Телефон *" autocomplete="tel" required />
-            <button class="btn" type="submit">Отправить</button>
+            <button class="btn" type="submit">ОТПРАВИТЬ</button>
           </div>
 
           <div class="status js-status"></div>
-          <div class="small-legal">Нажимая кнопку, вы соглашаетесь на обработку данных. Без спама.</div>
+
+          <div class="policies">
+            <span>Нажимая “Отправить”, вы соглашаетесь с</span>
+            <a href="/privacy.html" target="_blank" rel="noopener">Политикой конфиденциальности</a>
+            <span class="dot">•</span>
+            <a href="/terms.html" target="_blank" rel="noopener">Условиями использования</a>
+          </div>
         </form>
       </div>
     </section>
@@ -274,7 +282,7 @@
   </div>
 
   <script>
-    // DEMO submit (пока без отправки в таблицу/телеграм)
+    // DEMO submit (пока без реальной отправки)
     const form = document.querySelector('.js-lead-form');
     const statusEl = document.querySelector('.js-status');
 
@@ -296,7 +304,7 @@
       const btn = form.querySelector('button[type="submit"]');
       const old = btn.textContent;
       btn.disabled = true;
-      btn.textContent = 'Отправляем…';
+      btn.textContent = 'ОТПРАВЛЯЕМ…';
 
       await new Promise(r => setTimeout(r, 650));
 
