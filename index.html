@@ -8,459 +8,367 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#ffffff;
-      --text:#0f0f12;
-      --muted: rgba(15,15,18,.62);
-      --line: rgba(15,15,18,.10);
+      --bg:#070707;
+      --muted: rgba(255,255,255,.68);
+      --line: rgba(255,255,255,.10);
+      --glass: rgba(255,255,255,.06);
+      --glass2: rgba(255,255,255,.08);
     }
-    *{box-sizing:border-box;}
+    html,body{height:100%}
     body{
-      margin:0;
-      font-family: Montserrat, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      font-weight: 600; /* semibold */
-      background: var(--bg);
-      color: var(--text);
+      font-family: Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 50% -200px, rgba(255,255,255,.08), transparent 60%),
+                  linear-gradient(180deg, #050505 0%, #080808 50%, #050505 100%);
+      color:#fff;
     }
-
-    /* Full width, но с аккуратным воздухом как в рефе */
-    .wrap{width:100%; margin:0; padding:0;}
-    .pad{padding: 26px 18px;}
-
-    /* Header (чисто) */
-    .head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      font-size: 12px;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      color: rgba(15,15,18,.55);
+    .container-fix{max-width: 1180px; margin: 0 auto; padding: 0 18px;}
+    .chip{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-    .brand{
-      font-weight: 700;
-      letter-spacing: .12em;
-      color: var(--text);
+    .glass{
+      border:1px solid var(--line);
+      background: var(--glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
-    .wa{
-      color: rgba(15,15,18,.55);
+    .glass2{
+      border:1px solid var(--line);
+      background: var(--glass2);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
-
-    /* Title block (как Bocaroom, но белый) */
-    .hero{
-      padding-top: 22px;
-      padding-bottom: 18px;
-    }
-    .hero-title{
-      margin: 0;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.03;
-      font-size: clamp(34px, 7.4vw, 58px);
-      max-width: 18ch;
-    }
-    .u{
-      position: relative;
-      display:inline-block;
-      white-space: nowrap;
-    }
-    .u::after{
-      content:"";
-      position:absolute;
-      left: 0;
-      right: 0;
-      bottom: -0.12em;
-      height: 0.10em;
-      border-radius: 999px;
-      background: rgba(15,15,18,.14);
-    }
-
-    .hero-text{
-      margin-top: 18px;
-      max-width: 54ch;
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 1.7;
-      color: rgba(15,15,18,.64);
-    }
-    .hero-text b{
-      font-weight: 700;
-      color: rgba(15,15,18,.88);
-      border-bottom: 1px solid rgba(15,15,18,.22);
-      padding-bottom: 2px;
-    }
-
-    /* Фото */
-    .photo-area{
-      position: relative;
-      width: 100%;
-      padding: 0 18px 22px;
-    }
-    .photo{
-      width: 100%;
-      border-radius: 22px;
-      overflow: hidden;
-      background: #ececec;
-      position: relative;
-      aspect-ratio: 3/2;
-      min-height: 360px;
-    }
-    .photo img{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit: cover;
-      display:block;
-      filter: saturate(.98) contrast(1.02);
-      transform: scale(1.01);
-    }
-
-    /* Лидформа над фото — стекло, но читабельно */
-    .lead-glass{
-      position:absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 14px;
-
-      border-radius: 26px;
-      padding: 16px 16px 14px;
-
-      background: rgba(255,255,255,.52);
-      border: 1px solid rgba(15,15,18,.10);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 18px 60px rgba(0,0,0,.12);
-
-      color: rgba(15,15,18,.92);
-    }
-    .lead-title{
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: 12px;
-      color: rgba(15,15,18,.78);
-    }
-    .lead-note{
-      margin-top: 8px;
-      font-size: 14px;
-      line-height: 1.5;
-      font-weight: 500;
-      color: rgba(15,15,18,.78);
-    }
-
-    .lead-form{
-      margin-top: 12px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    .field{
-      width:100%;
-      border-radius: 16px;
-      padding: 14px 14px;
-      border: 1px solid rgba(15,15,18,.14);
-      background: rgba(255,255,255,.78);
-      color: rgba(15,15,18,.92);
-      outline:none;
-      font-weight: 500;
-      font-size: 16px;
-    }
-    .field::placeholder{color: rgba(15,15,18,.45); font-weight: 500;}
-    .field:focus{border-color: rgba(15,15,18,.26);}
-
+    .shadow-soft{ box-shadow: 0 18px 60px rgba(0,0,0,.55); }
     .btn{
-      width:100%;
-      border-radius: 999px;
-      padding: 14px 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .10em;
-      font-size: 12px;
-      border: 1px solid rgba(15,15,18,.10);
-      background: rgba(15,15,18,.92);
-      color: #fff;
-      cursor:pointer;
-      transition: transform .12s ease, opacity .12s ease;
-      user-select:none;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.10);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
     }
-    .btn:active{transform: translateY(1px) scale(.99);}
+    .btn:hover{ background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.22); }
+    .btn:active{ transform: translateY(1px); }
+    .drawer{ transform: translateX(-100%); }
+    .drawer.open{ transform: translateX(0%); }
+    .overlay{ opacity:0; pointer-events:none; }
+    .overlay.open{ opacity:1; pointer-events:auto; }
 
-    .status{
-      margin-top: 8px;
-      font-weight: 700;
-      font-size: 13px;
-      display:none;
-    }
-
-    .policies{
-      margin-top: 10px;
-      font-size: 11px;
-      font-weight: 500;
-      color: rgba(15,15,18,.56);
-      line-height: 1.35;
-    }
-    .policies a{
-      color: rgba(15,15,18,.78);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(15,15,18,.18);
-    }
-    .policies a:hover{border-bottom-color: rgba(15,15,18,.34);}
-
-    /* Popup modal (privacy/terms) */
-    .modal-backdrop{
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,.38);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 80;
-    }
-    .modal-backdrop.open{display:flex;}
-    .modal{
-      width: min(860px, 100%);
-      max-height: min(80vh, 720px);
-      overflow: hidden;
-      border-radius: 18px;
-      background: #fff;
-      border: 1px solid rgba(15,15,18,.12);
-      box-shadow: 0 30px 90px rgba(0,0,0,.22);
-      display:flex;
-      flex-direction: column;
-    }
-    .modal-header{
-      display:flex;
-      align-items:flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 16px;
-      border-bottom: 1px solid rgba(15,15,18,.10);
-    }
-    .modal-title{
-      font-weight: 700;
-      letter-spacing: .02em;
-      font-size: 16px;
-      color: rgba(15,15,18,.92);
-    }
-    .modal-close{
-      width: 40px; height: 40px;
-      border-radius: 999px;
-      border: 1px solid rgba(15,15,18,.12);
-      background: #fff;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 18px;
-      line-height: 1;
-    }
-    .modal-body{
-      padding: 16px;
-      overflow: auto;
-      font-weight: 500;
-      color: rgba(15,15,18,.78);
-      line-height: 1.65;
-      font-size: 14px;
-    }
-    .modal-body h3{
-      margin: 10px 0 6px;
-      font-weight: 700;
-      color: rgba(15,15,18,.90);
-      font-size: 14px;
-      letter-spacing: .02em;
-      text-transform: uppercase;
-    }
-    .modal-body ul{padding-left: 18px; margin: 8px 0;}
-    .modal-body li{margin: 6px 0;}
-
-    @media (min-width: 900px){
-      .pad{padding: 34px 28px;}
-      .photo-area{padding: 0 28px 28px;}
-      .photo{border-radius: 26px; aspect-ratio: 16/9;}
-      .lead-glass{
-        left: 18px; right: auto; bottom: 18px;
-        width: 620px;
-      }
+    /* Картинку ниже можешь заменить на свою */
+    .hero-photo{
+      background-image: url("https://images.unsplash.com/photo-1600493506271-3f6295c2f2c2?auto=format&fit=crop&w=2200&q=80");
+      background-size: cover;
+      background-position: center;
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
+  <!-- OVERLAY -->
+  <div id="overlay" class="overlay fixed inset-0 bg-black/65 transition-opacity duration-300 z-40"></div>
 
-    <section class="pad">
-      <div class="head">
-        <div class="brand">FOT</div>
-        <div class="wa">WHATSAPP</div>
+  <!-- LEFT DRAWER (меню слева направо) -->
+  <aside id="drawer" class="drawer fixed top-0 left-0 h-full w-[86%] max-w-[360px] bg-black/90 backdrop-blur-xl border-r border-white/10 transition-transform duration-300 z-50">
+    <div class="p-5 flex items-center justify-between border-b border-white/10">
+      <div class="text-white/90 font-semibold tracking-tight">Меню</div>
+      <button id="closeDrawer" class="p-2 rounded-xl hover:bg-white/10" aria-label="Закрыть меню">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6l12 12M18 6 6 18" stroke="white" stroke-opacity=".85" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="p-5 space-y-2">
+      <!-- Пункты меню -->
+      <a class="block py-3 text-white/85 hover:text-white text-[18px]" href="#home">Главная</a>
+      <a class="block py-3 text-white/85 hover:text-white text-[18px]" href="#about">О нас</a>
+      <a class="block py-3 text-white/85 hover:text-white text-[18px]" href="#interior">Дизайн интерьера</a>
+      <a class="block py-3 text-white/85 hover:text-white text-[18px]" href="#included">Что входит в дизайн проект</a>
+      <a class="block py-3 text-white/85 hover:text-white text-[18px]" href="#calc">Калькулятор</a>
+      <a class="block py-3 text-white/85 hover:text-white text-[18px]" href="#repair">Ремонт</a>
+      <a class="block py-3 text-white/85 hover:text-white text-[18px]" href="#contacts">Факс</a>
+
+      <div class="mt-8 pt-6 border-t border-white/10">
+        <div class="text-white/50 text-sm mb-2">Связаться</div>
+        <a class="inline-flex items-center gap-2 text-white/85 hover:text-white" href="https://wa.me/996000000000" target="_blank" rel="noreferrer">
+          <span class="inline-flex w-9 h-9 rounded-xl bg-white/10 items-center justify-center border border-white/10">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M20 11.6c0 4.7-3.8 8.4-8.4 8.4-1.4 0-2.7-.3-3.9-1l-3.7 1 1.1-3.5c-.7-1.2-1.1-2.6-1.1-4 0-4.7 3.8-8.4 8.4-8.4S20 6.9 20 11.6Z" stroke="white" stroke-opacity=".85" stroke-width="1.6" />
+              <path d="M9.3 9.1c.2-.3.5-.3.7-.2l.7.4c.2.1.3.3.2.6l-.3.8c-.1.2 0 .4.1.6.4.7 1.1 1.4 1.9 1.9.2.1.4.1.6.1l.8-.3c.2-.1.4 0 .6.2l.4.7c.1.2.1.5-.2.7-.6.5-1.2.7-2 .5-1.3-.4-2.5-1.2-3.5-2.2-1-1-1.8-2.2-2.2-3.5-.2-.8 0-1.5.5-2Z" fill="white" fill-opacity=".75"/>
+            </svg>
+          </span>
+          <span class="text-base">WhatsApp</span>
+        </a>
       </div>
+    </nav>
+  </aside>
 
-      <div class="hero">
-        <h1 class="hero-title">
-          ДИЗАЙН,<br>
-          КОТОРЫЙ ЭКОНОМИТ ДО <span class="u">500&nbsp;000&nbsp;СОМ</span><br>
-          НА РЕМОНТЕ
+  <!-- PRIVACY MODAL -->
+  <div id="privacyModal" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-black/70"></div>
+    <div class="absolute inset-x-0 top-14 mx-auto w-[92%] max-w-[520px] glass shadow-soft rounded-3xl overflow-hidden">
+      <div class="px-5 py-4 flex items-center justify-between border-b border-white/10">
+        <div class="font-semibold text-white/90">Политика конфиденциальности</div>
+        <button id="closePrivacy" class="p-2 rounded-xl hover:bg-white/10" aria-label="Закрыть">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6l12 12M18 6 6 18" stroke="white" stroke-opacity=".85" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="p-5 text-white/75 text-[14px] leading-relaxed">
+        <p class="mb-3">
+          Этот текст — заглушка. Позже заменишь на свой документ.
+          Важно для Facebook: рядом с формой должна быть ссылка на политику, где написано, какие данные собираете,
+          зачем, как храните и как можно удалить/изменить.
+        </p>
+        <ul class="list-disc pl-5 space-y-2">
+          <li>Какие данные: имя и телефон.</li>
+          <li>Цель: связаться и рассчитать стоимость/смету.</li>
+          <li>Срок хранения: пока актуален запрос клиента (укажешь свой срок).</li>
+          <li>Контакты для удаления данных: (почта/WhatsApp).</li>
+        </ul>
+        <div class="mt-5">
+          <button id="okPrivacy" class="w-full py-3 rounded-2xl btn font-semibold text-white/90">Понятно</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-30 bg-black/35 backdrop-blur-xl border-b border-white/5">
+    <div class="container-fix h-[72px] flex items-center justify-between">
+      <!-- left: spacer (как на референсе слева иконка, но мы не используем) -->
+      <div class="w-[44px]"></div>
+
+      <!-- center: logo -->
+      <a href="#home" class="text-white/90 font-semibold tracking-tight text-[18px] md:text-[20px]">
+        Fot<span class="text-white/55">.design</span>
+      </a>
+
+      <!-- right: WhatsApp + burger -->
+      <div class="flex items-center gap-2">
+        <a class="p-2 rounded-2xl hover:bg-white/10 border border-white/10"
+           href="https://wa.me/996000000000" target="_blank" rel="noreferrer"
+           aria-label="Написать в WhatsApp">
+          <!-- WhatsApp icon -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M20 11.6c0 4.7-3.8 8.4-8.4 8.4-1.4 0-2.7-.3-3.9-1l-3.7 1 1.1-3.5c-.7-1.2-1.1-2.6-1.1-4 0-4.7 3.8-8.4 8.4-8.4S20 6.9 20 11.6Z" stroke="white" stroke-opacity=".85" stroke-width="1.6" />
+            <path d="M9.3 9.1c.2-.3.5-.3.7-.2l.7.4c.2.1.3.3.2.6l-.3.8c-.1.2 0 .4.1.6.4.7 1.1 1.4 1.9 1.9.2.1.4.1.6.1l.8-.3c.2-.1.4 0 .6.2l.4.7c.1.2.1.5-.2.7-.6.5-1.2.7-2 .5-1.3-.4-2.5-1.2-3.5-2.2-1-1-1.8-2.2-2.2-3.5-.2-.8 0-1.5.5-2Z" fill="white" fill-opacity=".75"/>
+          </svg>
+        </a>
+
+        <button id="openDrawer" class="p-2 rounded-2xl hover:bg-white/10 border border-white/10" aria-label="Открыть меню">
+          <!-- burger -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="white" stroke-opacity=".85" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- top chips -->
+    <div class="container-fix pb-4">
+      <div class="flex gap-2 overflow-x-auto no-scrollbar">
+        <span class="chip whitespace-nowrap px-4 py-2 rounded-full text-white/80 text-[14px]">Интерьер</span>
+        <span class="chip whitespace-nowrap px-4 py-2 rounded-full text-white/80 text-[14px]">Ремонт</span>
+        <span class="chip whitespace-nowrap px-4 py-2 rounded-full text-white/80 text-[14px]">Авторский надзор</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main id="home">
+    <!-- HERO TEXT -->
+    <section class="container-fix pt-10 md:pt-14 pb-8">
+      <div class="max-w-[860px]">
+        <h1 class="text-white/90 font-semibold leading-[1.05] tracking-tight
+                   text-[44px] md:text-[64px]">
+          Дизайн который экономит до <span class="text-white">500&nbsp;000</span> сом.
         </h1>
 
-        <p class="hero-text">
-          Полный расчет сметы от материалов до мебели + комплектация в подарок.
-        </p>
-      </div>
-    </section>
-
-    <section class="photo-area">
-      <div class="photo">
-        <!-- ЗАМЕНИ НА СВОЮ КАРТИНКУ -->
-        <img src="https://images.unsplash.com/photo-1549187774-b4e9b0445b41?auto=format&fit=crop&w=2400&q=80" alt="FOT интерьер" />
-
-        <div class="lead-glass">
-          <div class="lead-title">FREE CONSULTATION</div>
-          <div class="lead-note">Оставьте имя и номер — сделаем быстрый расчёт и сориентируем по бюджету.</div>
-
-          <form class="js-lead-form" data-form-name="hero">
-            <div class="lead-form">
-              <input class="field" name="name" placeholder="Ваше имя" autocomplete="name" />
-              <input class="field" name="phone" placeholder="Телефон *" autocomplete="tel" required />
-              <button class="btn" type="submit">ОТПРАВИТЬ</button>
+        <div class="mt-6 max-w-[720px] glass rounded-3xl p-5 md:p-6 shadow-soft">
+          <div class="flex items-start gap-3">
+            <!-- gift icon -->
+            <div class="shrink-0 w-10 h-10 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M22 7H2v5h20V7Z" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M12 22V7" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M12 7H8.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7Z" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M12 7h3.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7Z" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
             </div>
 
-            <div class="status js-status"></div>
-
-            <div class="policies">
-              Нажимая “Отправить”, вы соглашаетесь с
-              <a href="#" data-open="privacyModal">Политикой конфиденциальности</a>
-              и
-              <a href="#" data-open="termsModal">Условиями использования</a>.
-            </div>
-          </form>
+            <p class="text-[15px] md:text-[16px] leading-relaxed text-white/75">
+              Полный расчет сметы от материалов до мебели + комплектация в подарок.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-  </div>
+    <!-- PHOTO + LEAD FORM OVER PHOTO -->
+    <section class="relative">
+      <div class="hero-photo h-[520px] md:h-[640px] w-full"></div>
 
-  <!-- PRIVACY MODAL -->
-  <div class="modal-backdrop" id="privacyModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
-      <div class="modal-header">
-        <div class="modal-title" id="privacyTitle">Политика конфиденциальности</div>
-        <button class="modal-close" data-close="privacyModal" aria-label="Закрыть">✕</button>
+      <!-- lead form glass on photo -->
+      <div class="container-fix">
+        <div class="relative -mt-[150px] md:-mt-[170px] pb-14">
+          <div class="glass2 shadow-soft rounded-[28px] p-5 md:p-6 max-w-[760px]">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-5">
+              <div>
+                <div class="text-white/90 font-semibold text-[18px] md:text-[20px]">Получить расчет</div>
+                <div class="mt-1 text-white/60 text-[14px]">Оставьте контакты — напишем в WhatsApp</div>
+              </div>
+              <div id="formStatus" class="text-[13px] text-white/70"></div>
+            </div>
+
+            <form id="leadForm" class="mt-5 grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3 md:gap-4">
+              <label class="block">
+                <span class="sr-only">Ваше имя</span>
+                <input id="name" name="name" type="text" placeholder="Ваше имя"
+                  class="w-full rounded-2xl px-4 py-3 bg-black/35 border border-white/10 text-white/90 placeholder:text-white/35 outline-none focus:border-white/25" />
+              </label>
+
+              <label class="block">
+                <span class="sr-only">Номер телефона</span>
+                <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="Номер телефона"
+                  class="w-full rounded-2xl px-4 py-3 bg-black/35 border border-white/10 text-white/90 placeholder:text-white/35 outline-none focus:border-white/25" />
+              </label>
+
+              <button type="submit"
+                class="btn rounded-2xl px-5 py-3 font-semibold text-white/90">
+                Отправить
+              </button>
+
+              <div class="md:col-span-3 text-[12px] text-white/55 leading-relaxed">
+                Нажимая «Отправить», вы соглашаетесь с
+                <button type="button" id="privacyLink" class="text-white/80 hover:text-white underline underline-offset-4">
+                  Политикой конфиденциальности
+                </button>.
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <h3>1. Общие положения</h3>
-        <p>Мы бережно относимся к вашим данным и используем их только для связи по вашей заявке.</p>
+    </section>
 
-        <h3>2. Какие данные собираем</h3>
-        <ul>
-          <li>Имя и номер телефона, которые вы указали в форме.</li>
-          <li>Технические данные (например, тип устройства) — только в рамках стандартной аналитики сайта.</li>
-        </ul>
+    <!-- Пустые секции под меню (чтобы якоря работали) -->
+    <section id="about" class="container-fix py-16 border-t border-white/5">
+      <div class="text-white/60">О нас — позже добавим контент.</div>
+    </section>
+    <section id="interior" class="container-fix py-16 border-t border-white/5">
+      <div class="text-white/60">Дизайн интерьера — позже добавим контент.</div>
+    </section>
+    <section id="included" class="container-fix py-16 border-t border-white/5">
+      <div class="text-white/60">Что входит — позже добавим контент.</div>
+    </section>
+    <section id="calc" class="container-fix py-16 border-t border-white/5">
+      <div class="text-white/60">Калькулятор — позже добавим контент.</div>
+    </section>
+    <section id="repair" class="container-fix py-16 border-t border-white/5">
+      <div class="text-white/60">Ремонт — позже добавим контент.</div>
+    </section>
+    <section id="contacts" class="container-fix py-16 border-t border-white/5">
+      <div class="text-white/60">Факс — позже добавим контент.</div>
+    </section>
+  </main>
 
-        <h3>3. Цель обработки</h3>
-        <ul>
-          <li>Связаться с вами по заявке.</li>
-          <li>Уточнить детали проекта и подготовить расчет.</li>
-        </ul>
-
-        <h3>4. Хранение и защита</h3>
-        <p>Доступ к данным ограничен. Мы не продаём и не передаём данные третьим лицам, кроме случаев, предусмотренных законом.</p>
-
-        <h3>5. Контакты</h3>
-        <p>Если хотите удалить или уточнить данные — напишите нам в WhatsApp.</p>
-      </div>
+  <footer class="border-t border-white/5">
+    <div class="container-fix py-10 text-white/40 text-sm">
+      © <span id="year"></span> Fot.design
     </div>
-  </div>
-
-  <!-- TERMS MODAL -->
-  <div class="modal-backdrop" id="termsModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
-      <div class="modal-header">
-        <div class="modal-title" id="termsTitle">Условия использования</div>
-        <button class="modal-close" data-close="termsModal" aria-label="Закрыть">✕</button>
-      </div>
-      <div class="modal-body">
-        <h3>1. Использование сайта</h3>
-        <p>Сайт носит информационный характер. Отправляя заявку, вы подтверждаете, что предоставляете достоверные данные.</p>
-
-        <h3>2. Заявка и обратная связь</h3>
-        <ul>
-          <li>Мы связываемся с вами по указанному номеру.</li>
-          <li>Срок ответа зависит от загруженности, обычно в течение рабочего дня.</li>
-        </ul>
-
-        <h3>3. Ограничение ответственности</h3>
-        <p>Итоговая стоимость проекта зависит от исходных данных, площади, пожеланий и бюджета.</p>
-
-        <h3>4. Изменения условий</h3>
-        <p>Мы можем обновлять эти условия. Актуальная версия всегда доступна на сайте.</p>
-      </div>
-    </div>
-  </div>
+  </footer>
 
   <script>
-    // Demo submit
-    const form = document.querySelector('.js-lead-form');
-    const statusEl = document.querySelector('.js-status');
+    // ====== Drawer ======
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const openDrawerBtn = document.getElementById('openDrawer');
+    const closeDrawerBtn = document.getElementById('closeDrawer');
 
-    const showStatus = (ok, text) => {
-      statusEl.style.display = 'block';
-      statusEl.textContent = text;
-      statusEl.style.color = ok ? 'rgba(5,120,60,.92)' : 'rgba(176,0,32,.92)';
-    };
+    function openDrawer(){
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
 
-    form.addEventListener('submit', async (e) => {
+    openDrawerBtn.addEventListener('click', openDrawer);
+    closeDrawerBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    // Закрывать меню при клике по пунктам
+    drawer.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', () => closeDrawer());
+    });
+
+    // ====== Privacy modal ======
+    const privacyModal = document.getElementById('privacyModal');
+    const privacyLink = document.getElementById('privacyLink');
+    const closePrivacy = document.getElementById('closePrivacy');
+    const okPrivacy = document.getElementById('okPrivacy');
+
+    function openPrivacy(){
+      privacyModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePrivacyModal(){
+      privacyModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    privacyLink.addEventListener('click', openPrivacy);
+    closePrivacy.addEventListener('click', closePrivacyModal);
+    okPrivacy.addEventListener('click', closePrivacyModal);
+    privacyModal.addEventListener('click', (e) => {
+      if(e.target === privacyModal.firstElementChild) closePrivacyModal();
+    });
+
+    // ====== Form (пока просто кликабельно) ======
+    const leadForm = document.getElementById('leadForm');
+    const formStatus = document.getElementById('formStatus');
+    const phoneInput = document.getElementById('phone');
+
+    function normalizePhone(v){
+      return (v || "").replace(/[^\d+]/g, "");
+    }
+    function isPhoneValid(v){
+      const n = normalizePhone(v).replace(/\+/g,'');
+      // минимум 9 цифр (под КГ/РФ норм) — потом настроим
+      return n.length >= 9;
+    }
+
+    leadForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const phone = phoneInput.value.trim();
 
-      const phone = (form.querySelector('input[name="phone"]').value || '').trim();
-      if (!phone || phone.length < 6){
-        showStatus(false, 'Проверьте номер телефона');
+      if(!name){
+        formStatus.textContent = "Введите имя";
+        return;
+      }
+      if(!isPhoneValid(phone)){
+        formStatus.textContent = "Проверьте номер телефона";
         return;
       }
 
-      const btn = form.querySelector('button[type="submit"]');
-      const old = btn.textContent;
-      btn.disabled = true;
-      btn.textContent = 'ОТПРАВЛЯЕМ…';
-
-      await new Promise(r => setTimeout(r, 650));
-
-      showStatus(true, 'Заявка отправлена ✅');
-      form.reset();
-
-      btn.disabled = false;
-      btn.textContent = old;
+      // Заглушка отправки — позже подключишь (Make/Sheets/WhatsApp/CRM)
+      formStatus.textContent = "Отправляем…";
+      setTimeout(() => {
+        formStatus.textContent = "Заявка отправлена ✅";
+        leadForm.reset();
+      }, 900);
     });
 
-    // Modals: open/close
-    const openModal = (id) => document.getElementById(id)?.classList.add('open');
-    const closeModal = (id) => document.getElementById(id)?.classList.remove('open');
-
-    document.addEventListener('click', (e) => {
-      const openBtn = e.target.closest('[data-open]');
-      const closeBtn = e.target.closest('[data-close]');
-
-      if (openBtn){
-        e.preventDefault();
-        openModal(openBtn.getAttribute('data-open'));
-      }
-
-      if (closeBtn){
-        closeModal(closeBtn.getAttribute('data-close'));
-      }
-
-      if (e.target.classList.contains('modal-backdrop')){
-        e.target.classList.remove('open');
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape'){
-        document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
-      }
-    });
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
