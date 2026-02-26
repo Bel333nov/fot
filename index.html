@@ -57,7 +57,7 @@
             <input id="modalPhone" type="tel" inputmode="tel" placeholder="Номер телефона"
                    class="w-full rounded-2xl px-4 py-3 field text-white placeholder:text-white/50" />
 
-            <button type="submit" class="btn rounded-2xl px-5 py-3 font-semibold text-white/95">
+            <button id="modalSubmit" type="submit" class="btn rounded-2xl px-5 py-3 font-semibold text-white/95">
               Отправить
             </button>
 
@@ -150,7 +150,7 @@
                      class="w-full rounded-2xl px-4 py-3 field text-white placeholder:text-white/50" />
               <input id="phone1" name="phone" type="tel" inputmode="tel" placeholder="Номер телефона"
                      class="w-full rounded-2xl px-4 py-3 field text-white placeholder:text-white/50" />
-              <button type="submit" class="btn rounded-2xl px-5 py-3 font-semibold text-white/95">Отправить</button>
+              <button id="submit1" type="submit" class="btn rounded-2xl px-5 py-3 font-semibold text-white/95">Отправить</button>
 
               <div class="md:col-span-3 text-[11px] text-white/70 leading-relaxed">
                 Нажимая «Отправить», вы соглашаетесь с
@@ -302,7 +302,7 @@
           <input id="phone2" name="phone" type="tel" inputmode="tel" placeholder="Номер телефона"
                  class="w-full rounded-2xl px-4 py-3 field text-white placeholder:text-white/50" />
 
-          <button type="submit" class="btn rounded-2xl px-5 py-3 font-semibold text-white/95">Отправить</button>
+          <button id="submit2" type="submit" class="btn rounded-2xl px-5 py-3 font-semibold text-white/95">Отправить</button>
 
           <div class="md:col-span-4 text-[11px] text-white/70 leading-relaxed">
             Нажимая «Отправить», вы соглашаетесь с
@@ -510,49 +510,103 @@
   </main>
 
   <script>
+    // ====== GOOGLE SHEETS INTEGRATION (Apps Script Web App) ======
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3ALrZmWWtsX6Pxu6DHq2nCyqBTgyE-6nMXWyzM4-GK0QgS0mBDS2_BeWhDLUqIVkr/exec";
+
     // helpers
     const digits = (v)=> (v||"").replace(/[^\d]/g,'');
     const okPhone = (v)=> digits(v).length >= 9;
 
-    // lead form 1 (stub)
+    const sendLead = async ({ name, phone, source, service }) => {
+      // text/plain to avoid Apps Script CORS quirks
+      return fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ name, phone, source, service })
+      });
+    };
+
+    // lead form 1 -> Sheets
     const f1 = document.getElementById('leadForm1');
     const s1 = document.getElementById('formStatus1');
-    f1.addEventListener('submit', (e)=>{
+    const btn1 = document.getElementById('submit1');
+
+    f1.addEventListener('submit', async (e)=>{
       e.preventDefault();
+
       const name = document.getElementById('name1').value.trim();
       const phone = document.getElementById('phone1').value.trim();
+
       if(!name) return s1.textContent = "Введите имя";
       if(!okPhone(phone)) return s1.textContent = "Проверьте номер";
-      s1.textContent = "Отправляем…";
-      setTimeout(()=>{ s1.textContent = "Готово ✅"; f1.reset(); }, 700);
+
+      btn1.disabled = true;
+      const oldText = btn1.textContent;
+      btn1.textContent = "Отправляем…";
+      s1.textContent = "";
+
+      try{
+        await sendLead({ name, phone, source: "Сайт", service: "Получить расчет" });
+        s1.textContent = "Готово ✅";
+        f1.reset();
+      }catch(err){
+        s1.textContent = "Ошибка отправки";
+      }finally{
+        btn1.disabled = false;
+        btn1.textContent = oldText;
+      }
     });
 
-    // lead form 2 (stub)
+    // lead form 2 -> Sheets
     const f2 = document.getElementById('leadForm2');
     const s2 = document.getElementById('formStatus2');
-    f2.addEventListener('submit', (e)=>{
+    const btn2 = document.getElementById('submit2');
+
+    f2.addEventListener('submit', async (e)=>{
       e.preventDefault();
+
       const service = document.getElementById('service2').value;
       const name = document.getElementById('name2').value.trim();
       const phone = document.getElementById('phone2').value.trim();
+
       if(!name) return s2.textContent = "Введите имя";
       if(!okPhone(phone)) return s2.textContent = "Проверьте номер";
-      s2.textContent = "Отправляем…";
-      setTimeout(()=>{ s2.textContent = "Готово ✅ ("+service+")"; f2.reset(); }, 800);
+
+      btn2.disabled = true;
+      const oldText = btn2.textContent;
+      btn2.textContent = "Отправляем…";
+      s2.textContent = "";
+
+      try{
+        await sendLead({ name, phone, source: "Сайт", service: "Консультация на объекте — " + service });
+        s2.textContent = "Готово ✅";
+        f2.reset();
+      }catch(err){
+        s2.textContent = "Ошибка отправки";
+      }finally{
+        btn2.disabled = false;
+        btn2.textContent = oldText;
+      }
     });
 
-    // modal open/close
+    // ====== MODAL (project inquiry) ======
     const modal = document.getElementById('projectModal');
     const closeModalBtn = document.getElementById('closeModal');
     const modalProject = document.getElementById('modalProject');
     const modalForm = document.getElementById('modalForm');
     const modalStatus = document.getElementById('modalStatus');
+    const modalSubmit = document.getElementById('modalSubmit');
+
+    let currentProject = "";
 
     const openModal = (projectName) => {
-      modalProject.textContent = projectName ? " • " + projectName : "";
+      currentProject = projectName || "";
+      modalProject.textContent = currentProject ? " • " + currentProject : "";
+
       modal.classList.remove('modalhide');
       modal.classList.add('modalshow');
       document.body.style.overflow = 'hidden';
+
       modalStatus.textContent = "";
       document.getElementById('modalName').value = "";
       document.getElementById('modalPhone').value = "";
@@ -573,15 +627,31 @@
       btn.addEventListener('click', ()=>openModal(btn.dataset.project));
     });
 
-    // modal form (stub)
-    modalForm.addEventListener('submit', (e)=>{
+    // modal form -> Sheets
+    modalForm.addEventListener('submit', async (e)=>{
       e.preventDefault();
+
       const name = document.getElementById('modalName').value.trim();
       const phone = document.getElementById('modalPhone').value.trim();
+
       if(!name) return modalStatus.textContent = "Введите имя";
       if(!okPhone(phone)) return modalStatus.textContent = "Проверьте номер";
-      modalStatus.textContent = "Отправляем…";
-      setTimeout(()=>{ modalStatus.textContent = "Готово ✅"; modalForm.reset(); }, 800);
+
+      modalSubmit.disabled = true;
+      const oldText = modalSubmit.textContent;
+      modalSubmit.textContent = "Отправляем…";
+      modalStatus.textContent = "";
+
+      try{
+        await sendLead({ name, phone, source: "Сайт", service: "Проект — " + (currentProject || "Узнать больше") });
+        modalStatus.textContent = "Готово ✅";
+        modalForm.reset();
+      }catch(err){
+        modalStatus.textContent = "Ошибка отправки";
+      }finally{
+        modalSubmit.disabled = false;
+        modalSubmit.textContent = oldText;
+      }
     });
   </script>
 </body>
