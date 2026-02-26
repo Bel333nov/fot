@@ -12,15 +12,13 @@
 
   <style>
     :root{
-      --bg: #f6f6f5;
-      --text: #0f0f10;
-      --muted: rgba(15,15,16,.62);
-      --line: rgba(15,15,16,.10);
-      --card: rgba(255,255,255,.82);
-      --shadow: 0 16px 50px rgba(0,0,0,.08);
-      --r-xl: 28px;
-      --r-lg: 22px;
-      --r-md: 16px;
+      --bg: #ffffff;
+      --text: #101012;
+      --muted: rgba(16,16,18,.62);
+      --line: rgba(16,16,18,.14);
+      --line2: rgba(16,16,18,.08);
+      --radius: 20px;
+      --radius2: 16px;
     }
     body{
       font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
@@ -28,77 +26,161 @@
       color: var(--text);
     }
     .container-fix{max-width:1180px;margin:0 auto;padding:0 20px;}
-    .muted{color: var(--muted);}
+    .muted{color:var(--muted);}
+    .hairline{border: 1px solid var(--line2);}
+    .line{border: 1px solid var(--line);}
 
     .btn{
       border-radius: 999px;
       padding: 12px 16px;
-      font-weight: 800;
+      font-weight: 900;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       transition: transform .12s ease, opacity .12s ease;
-      user-select: none;
+      user-select:none;
     }
     .btn:active{transform: translateY(1px) scale(.99);}
-    .btn-primary{background:#0f0f10;color:#fff;}
-    .btn-ghost{
-      background: rgba(255,255,255,.7);
-      border: 1px solid var(--line);
-      color: #0f0f10;
-    }
+    .btn-primary{background:#101012;color:#fff;}
+    .btn-ghost{background:#fff;border:1px solid var(--line);color:#101012;}
 
     .field{
-      width: 100%;
-      border-radius: 16px;
-      border: 1px solid var(--line);
+      width:100%;
+      border-radius: 14px;
+      border:1px solid var(--line2);
       padding: 12px 14px;
-      background: rgba(255,255,255,.92);
-      outline: none;
+      background:#fff;
+      outline:none;
     }
-    .field:focus{border-color: rgba(15,15,16,.25);}
+    .field:focus{border-color: rgba(16,16,18,.22);}
 
-    /* HERO (как на скрине: фото на фоне + белый аккуратный контент слева) */
+    /* HERO — чистый, дорогой, без градиентов и стекла */
     .hero{
       margin-top: 18px;
-      border-radius: var(--r-xl);
-      overflow: hidden;
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      background: #e9e9e8;
+      border-radius: var(--radius);
+      overflow:hidden;
+      border:1px solid var(--line2);
+      background:#fff;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      min-height: 620px;
+    }
+    .hero-left{
+      padding: 34px;
+      display:flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--line2);
+    }
+    .hero-right{
       position: relative;
-      min-height: 640px;
+      background:#f2f2f2;
     }
-    .hero-bg{
+    .hero-right img{
       position:absolute; inset:0;
-      background-size: cover;
-      background-position: center;
-      transform: scale(1.02);
-      filter: saturate(.98) contrast(1.02);
+      width:100%; height:100%;
+      object-fit: cover;
     }
-    .hero::after{
-      content:"";
-      position:absolute; inset:0;
-      /* слева светло, справа фото — как на примере */
-      background:
-        linear-gradient(90deg,
-          rgba(246,246,245,.98) 0%,
-          rgba(246,246,245,.90) 36%,
-          rgba(246,246,245,.55) 56%,
-          rgba(246,246,245,.20) 72%,
-          rgba(246,246,245,.00) 100%);
+    .kicker{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 12px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 800;
     }
-    .hero-inner{position:relative; z-index:1; height:100%;}
-    .card{
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--r-lg);
-      box-shadow: 0 12px 34px rgba(0,0,0,.06);
-      backdrop-filter: blur(10px);
+    .kicker a{color:var(--text); opacity:.8; text-decoration:none;}
+    .kicker a:hover{opacity:1; text-decoration:underline;}
+
+    .title{
+      font-weight: 1000;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+      font-size: 44px;
+    }
+    .subtitle{
+      margin-top: 14px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 52ch;
     }
 
-    /* Модалка (пока оставил, но можно убрать если не нужна) */
+    .mini-cta{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .hero-form{
+      margin-top: 18px;
+      border-top: 1px solid var(--line2);
+      padding-top: 18px;
+    }
+    .hero-form .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 10px;
+    }
+
+    .note{
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Sections — минимализм */
+    .section{
+      margin-top: 48px;
+    }
+    .h2{
+      font-size: 28px;
+      font-weight: 1000;
+      letter-spacing: -0.02em;
+    }
+    .cards{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card{
+      border:1px solid var(--line2);
+      border-radius: var(--radius2);
+      background:#fff;
+      padding: 18px;
+    }
+    .card .t{font-weight: 900;}
+    .card .p{margin-top: 8px; color: var(--muted); line-height: 1.6; font-size: 14px;}
+
+    /* Portfolio */
+    .portfolio{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .project{
+      border:1px solid var(--line2);
+      border-radius: var(--radius2);
+      overflow:hidden;
+      background:#fff;
+    }
+    .ph{
+      aspect-ratio: 4/3;
+      background:#f2f2f2;
+    }
+    .project img{width:100%; height:100%; object-fit:cover; display:block;}
+    .project .meta{padding: 14px 14px 16px;}
+    .project .meta .name{font-weight: 900;}
+    .project .meta .small{margin-top: 6px; font-size: 13px; color: var(--muted);}
+
+    /* Modal (простая лидформа) */
     .modal-backdrop{
       position: fixed; inset: 0;
       background: rgba(0,0,0,.55);
@@ -110,37 +192,33 @@
     }
     .modal-backdrop.open{display:flex;}
     .modal{
-      width: min(680px, 100%);
-      border-radius: 26px;
+      width: min(640px, 100%);
+      border-radius: 18px;
       background: #fff;
-      border: 1px solid rgba(0,0,0,.12);
-      box-shadow: 0 30px 80px rgba(0,0,0,.30);
+      border: 1px solid rgba(0,0,0,.10);
       overflow: hidden;
     }
     .modal-header{
       display:flex;align-items:flex-start;justify-content:space-between;
       gap: 16px;
-      padding: 18px 18px 10px;
+      padding: 16px;
       border-bottom: 1px solid rgba(0,0,0,.08);
     }
-    .modal-body{padding: 16px 18px 18px;}
+    .modal-body{padding: 16px;}
     .xbtn{
       width: 40px;height:40px;border-radius: 999px;
       border: 1px solid rgba(0,0,0,.12);
       display:inline-flex;align-items:center;justify-content:center;
-      background: rgba(255,255,255,.9);
+      background: #fff;
     }
 
-    @media (max-width: 768px){
-      .hero{min-height: 720px;}
-      .hero::after{
-        background:
-          linear-gradient(180deg,
-            rgba(246,246,245,.98) 0%,
-            rgba(246,246,245,.92) 50%,
-            rgba(246,246,245,.35) 78%,
-            rgba(246,246,245,.0) 100%);
-      }
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns: 1fr;}
+      .hero-left{border-right: none; border-bottom: 1px solid var(--line2);}
+      .hero-form .grid{grid-template-columns: 1fr; }
+      .title{font-size: 38px;}
+      .cards{grid-template-columns: 1fr;}
+      .portfolio{grid-template-columns: 1fr;}
     }
   </style>
 </head>
@@ -151,16 +229,16 @@
   <header class="container-fix pt-6">
     <div class="flex items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-black text-white flex items-center justify-center font-black">F</div>
+        <div class="w-10 h-10 rounded-2xl border border-black/10 flex items-center justify-center font-black">F</div>
         <div>
           <div class="font-black tracking-tight">FOT</div>
-          <div class="text-xs muted -mt-0.5">Студия дизайна интерьера</div>
+          <div class="text-xs muted -mt-0.5">Студия дизайна интерьера • Бишкек</div>
         </div>
       </div>
 
       <nav class="hidden md:flex items-center gap-2">
         <a class="btn btn-ghost" href="#about">О студии</a>
-        <a class="btn btn-ghost" href="#portfolio">Портфолио</a>
+        <a class="btn btn-ghost" href="#portfolio">Проекты</a>
         <button class="btn btn-primary" data-open="leadModal" data-lead-title="Получить консультацию">Консультация</button>
       </nav>
 
@@ -169,111 +247,127 @@
   </header>
 
   <!-- HERO -->
-  <section class="container-fix">
-    <div class="hero mt-6">
-      <!-- HERO_BG: замени ссылку на свою картинку -->
-      <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=2400&q=80');"></div>
-
-      <div class="hero-inner p-6 md:p-10">
-        <div class="max-w-xl">
-          <h1 class="text-4xl md:text-5xl font-black leading-[1.02] tracking-tight">
-            Современный дизайн интерьера<br class="hidden md:block"> для квартир и домов
-          </h1>
-
-          <p class="muted mt-4 text-base md:text-lg leading-relaxed">
-            Спроектируем интерьер так, чтобы ремонт прошёл спокойно: логичная планировка, точные чертежи и единый стиль.
-          </p>
-
-          <!-- Мини-лидформа: только имя + телефон -->
-          <div class="card mt-6 p-5 md:p-6">
-            <div class="font-black text-lg tracking-tight">Бесплатная консультация</div>
-            <div class="muted text-sm mt-1">Оставьте контакт — свяжемся и уточним детали.</div>
-
-            <form class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3 js-lead-form" data-form-name="hero">
-              <input class="field" name="name" placeholder="Ваше имя" autocomplete="name" />
-              <input class="field" name="phone" placeholder="Телефон" autocomplete="tel" required />
-              <button class="btn btn-primary w-full" type="submit">Отправить</button>
-              <div class="md:col-span-3 hidden text-sm font-bold js-status"></div>
-              <div class="md:col-span-3 text-xs muted leading-relaxed">
-                Нажимая кнопку, вы соглашаетесь на обработку данных.
+  <main class="container-fix">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div>
+            <div class="kicker">
+              <span>FOT • INTERIOR DESIGN</span>
+              <div class="flex items-center gap-4">
+                <a href="#portfolio">PROJECTS</a>
+                <a href="#contact">CONTACT</a>
               </div>
-            </form>
+            </div>
+
+            <h1 class="title mt-6">
+              Дизайн, который экономит до 500 000 сом на ремонте.
+            </h1>
+
+            <p class="subtitle">
+              Полный расчет сметы от материалов до мебели + комплектация в подарок.
+            </p>
+
+            <div class="mini-cta">
+              <button class="btn btn-primary" data-open="leadModal" data-lead-title="Полный расчёт сметы + комплектация">Получить расчёт</button>
+              <a class="btn btn-ghost" href="#portfolio">Смотреть проекты</a>
+            </div>
+
+            <!-- Лидформа: имя + телефон -->
+            <div class="hero-form">
+              <form class="js-lead-form" data-form-name="hero">
+                <div class="grid">
+                  <input class="field" name="name" placeholder="Ваше имя" autocomplete="name" />
+                  <input class="field" name="phone" placeholder="Телефон *" autocomplete="tel" required />
+                  <button class="btn btn-primary" type="submit">Отправить</button>
+                </div>
+                <div class="js-status hidden mt-3 text-sm font-bold"></div>
+                <div class="note">Нажимая кнопку, вы соглашаетесь на обработку данных. Без спама.</div>
+              </form>
+            </div>
           </div>
 
-          <div class="mt-4">
-            <a class="btn btn-ghost" href="#portfolio">Смотреть портфолио</a>
+          <div class="flex items-center justify-between text-xs muted" id="contact">
+            <span>WhatsApp / Telegram по запросу после заявки</span>
+            <span>© FOT</span>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- CLEAN SECTIONS (минимально, аккуратно) -->
-  <section id="about" class="container-fix mt-12">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <div class="card p-6">
-        <div class="font-black text-lg">Планировка</div>
-        <p class="muted mt-2 leading-relaxed">Оптимизируем пространство и сценарии жизни — удобно каждый день.</p>
-      </div>
-      <div class="card p-6">
-        <div class="font-black text-lg">Чертежи</div>
-        <p class="muted mt-2 leading-relaxed">Понятный комплект документов для строителей — меньше ошибок и переделок.</p>
-      </div>
-      <div class="card p-6">
-        <div class="font-black text-lg">Стиль</div>
-        <p class="muted mt-2 leading-relaxed">Цельный визуал: материалы, свет, мебель — всё собираем в одну систему.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="portfolio" class="container-fix mt-12 pb-20">
-    <div class="flex items-end justify-between gap-3">
-      <div>
-        <h2 class="text-3xl md:text-4xl font-black tracking-tight">Портфолио</h2>
-        <p class="muted mt-2">Пока здесь заглушки. Потом заменим на твои проекты (карточки “как портфолио”).</p>
-      </div>
-      <button class="btn btn-primary hidden md:inline-flex" data-open="leadModal" data-lead-title="Хочу похожий интерьер">
-        Хочу похожий интерьер
-      </button>
-    </div>
-
-    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <article class="card overflow-hidden">
-        <div class="aspect-[4/3] bg-[#ececeb]"></div>
-        <div class="p-5">
-          <div class="font-black">Проект #1</div>
-          <div class="muted text-sm mt-1">Квартира • 72 м²</div>
-          <button class="btn btn-ghost w-full mt-4" data-open="leadModal" data-lead-title="Проект #1 — хочу похожий интерьер">
-            Узнать стоимость
-          </button>
+        <div class="hero-right">
+          <!-- Заменишь на свою картинку (как на скрине) -->
+          <img src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=2400&q=80" alt="Интерьер фон">
         </div>
-      </article>
+      </div>
+    </section>
 
-      <article class="card overflow-hidden">
-        <div class="aspect-[4/3] bg-[#ececeb]"></div>
-        <div class="p-5">
-          <div class="font-black">Проект #2</div>
-          <div class="muted text-sm mt-1">Дом • 140 м²</div>
-          <button class="btn btn-ghost w-full mt-4" data-open="leadModal" data-lead-title="Проект #2 — хочу похожий интерьер">
-            Узнать стоимость
-          </button>
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="flex items-end justify-between gap-3">
+        <div>
+          <div class="h2">О студии</div>
+          <div class="muted mt-2">Работаем так, чтобы ремонт шёл без хаоса: план, цифры, контроль.</div>
         </div>
-      </article>
+        <button class="btn btn-ghost hidden md:inline-flex" data-open="leadModal" data-lead-title="Хочу консультацию по проекту">FREE CONSULTATION</button>
+      </div>
 
-      <article class="card overflow-hidden">
-        <div class="aspect-[4/3] bg-[#ececeb]"></div>
-        <div class="p-5">
-          <div class="font-black">Проект #3</div>
-          <div class="muted text-sm mt-1">Квартира • 48 м²</div>
-          <button class="btn btn-ghost w-full mt-4" data-open="leadModal" data-lead-title="Проект #3 — хочу похожий интерьер">
-            Узнать стоимость
-          </button>
+      <div class="cards">
+        <div class="card">
+          <div class="t">Смета и бюджет</div>
+          <div class="p">Считаем проект “в цифрах”: материалы, мебель, свет — чтобы заранее понимать стоимость.</div>
         </div>
-      </article>
-    </div>
-  </section>
+        <div class="card">
+          <div class="t">Точные чертежи</div>
+          <div class="p">Планы, развертки, электрика, узлы — строителям понятно, вам спокойно.</div>
+        </div>
+        <div class="card">
+          <div class="t">Комплектация</div>
+          <div class="p">Подбираем всё под стиль и бюджет. По вашему офферу — комплектация в подарок.</div>
+        </div>
+      </div>
+    </section>
 
-  <!-- MODAL (простая лидформа) -->
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="section pb-20">
+      <div class="flex items-end justify-between gap-3">
+        <div>
+          <div class="h2">Projects we are proud of</div>
+          <div class="muted mt-2">Здесь будут карточки из твоих Instagram-проектов (как портфолио, без “соцсетей”).</div>
+        </div>
+        <button class="btn btn-primary hidden md:inline-flex" data-open="leadModal" data-lead-title="Хочу похожий интерьер">Start a project</button>
+      </div>
+
+      <div class="portfolio">
+        <article class="project">
+          <div class="ph"></div>
+          <div class="meta">
+            <div class="name">Квартира • 72 м²</div>
+            <div class="small">Современный стиль • кухня-гостиная</div>
+            <button class="btn btn-ghost w-full mt-3" data-open="leadModal" data-lead-title="Квартира 72 м² — хочу расчёт">Получить расчёт</button>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="ph"></div>
+          <div class="meta">
+            <div class="name">Дом • 140 м²</div>
+            <div class="small">Тёплые материалы • световые сценарии</div>
+            <button class="btn btn-ghost w-full mt-3" data-open="leadModal" data-lead-title="Дом 140 м² — хочу расчёт">Получить расчёт</button>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="ph"></div>
+          <div class="meta">
+            <div class="name">Квартира • 48 м²</div>
+            <div class="small">Минимализм • максимум хранения</div>
+            <button class="btn btn-ghost w-full mt-3" data-open="leadModal" data-lead-title="Квартира 48 м² — хочу расчёт">Получить расчёт</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL -->
   <div class="modal-backdrop" id="leadModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
       <div class="modal-header">
@@ -333,7 +427,7 @@
       }
     });
 
-    // FORMS (пока демо-отправка)
+    // FORMS (пока демо)
     const forms = document.querySelectorAll('.js-lead-form');
 
     const showStatus = (form, ok, text) => {
@@ -359,8 +453,7 @@
           return;
         }
 
-        // имитация отправки
-        await new Promise(r => setTimeout(r, 600));
+        await new Promise(r => setTimeout(r, 550));
 
         showStatus(form, true, 'Заявка отправлена ✅');
         form.reset();
@@ -369,7 +462,7 @@
 
         const modal = form.closest('.modal-backdrop');
         if (modal){
-          setTimeout(() => modal.classList.remove('open'), 800);
+          setTimeout(() => modal.classList.remove('open'), 750);
         }
       });
     });
