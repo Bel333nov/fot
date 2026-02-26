@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FOT — Дизайн интерьера в Бишкеке</title>
+  <title>FOT — Дизайн интерьера</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -16,38 +16,24 @@
       --text: #0f0f10;
       --muted: rgba(15,15,16,.62);
       --line: rgba(15,15,16,.10);
-      --card: rgba(255,255,255,.72);
-      --shadow: 0 14px 40px rgba(0,0,0,.08);
-      --r-xl: 30px;
-      --r-lg: 24px;
-      --r-md: 18px;
+      --card: rgba(255,255,255,.82);
+      --shadow: 0 16px 50px rgba(0,0,0,.08);
+      --r-xl: 28px;
+      --r-lg: 22px;
+      --r-md: 16px;
     }
     body{
-      font-family: Manrope, Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: radial-gradient(1200px 700px at 20% 10%, rgba(0,0,0,.04), transparent 55%),
-                  radial-gradient(900px 600px at 80% 0%, rgba(0,0,0,.03), transparent 55%),
-                  var(--bg);
+      font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
       color: var(--text);
     }
     .container-fix{max-width:1180px;margin:0 auto;padding:0 20px;}
-    .glass{
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--r-xl);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-    }
-    .soft{
-      border: 1px solid var(--line);
-      border-radius: var(--r-lg);
-      background: rgba(255,255,255,.55);
-      backdrop-filter: blur(10px);
-    }
     .muted{color: var(--muted);}
+
     .btn{
       border-radius: 999px;
       padding: 12px 16px;
-      font-weight: 700;
+      font-weight: 800;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -56,52 +42,63 @@
       user-select: none;
     }
     .btn:active{transform: translateY(1px) scale(.99);}
-    .btn-primary{
-      background: #0f0f10;
-      color: #fff;
-    }
+    .btn-primary{background:#0f0f10;color:#fff;}
     .btn-ghost{
-      background: rgba(255,255,255,.6);
+      background: rgba(255,255,255,.7);
       border: 1px solid var(--line);
       color: #0f0f10;
     }
+
     .field{
       width: 100%;
       border-radius: 16px;
       border: 1px solid var(--line);
       padding: 12px 14px;
-      background: rgba(255,255,255,.8);
+      background: rgba(255,255,255,.92);
       outline: none;
     }
-    .field:focus{border-color: rgba(15,15,16,.28);}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      background: rgba(255,255,255,.6);
-      border: 1px solid var(--line);
-      font-weight: 700;
-      font-size: 12px;
-    }
-    .hero-media{
+    .field:focus{border-color: rgba(15,15,16,.25);}
+
+    /* HERO (как на скрине: фото на фоне + белый аккуратный контент слева) */
+    .hero{
+      margin-top: 18px;
       border-radius: var(--r-xl);
       overflow: hidden;
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
       background: #e9e9e8;
       position: relative;
-      min-height: 520px;
+      min-height: 640px;
     }
-    .hero-media img{
-      width:100%;height:100%;object-fit:cover;
-      position:absolute;inset:0;
-      filter: saturate(.98) contrast(1.02);
+    .hero-bg{
+      position:absolute; inset:0;
+      background-size: cover;
+      background-position: center;
       transform: scale(1.02);
+      filter: saturate(.98) contrast(1.02);
     }
-    .hero-media::after{
+    .hero::after{
       content:"";
-      position:absolute;inset:0;
-      background: linear-gradient(90deg, rgba(246,246,245,.96) 0%, rgba(246,246,245,.78) 35%, rgba(246,246,245,.30) 65%, rgba(246,246,245,.06) 100%);
+      position:absolute; inset:0;
+      /* слева светло, справа фото — как на примере */
+      background:
+        linear-gradient(90deg,
+          rgba(246,246,245,.98) 0%,
+          rgba(246,246,245,.90) 36%,
+          rgba(246,246,245,.55) 56%,
+          rgba(246,246,245,.20) 72%,
+          rgba(246,246,245,.00) 100%);
     }
+    .hero-inner{position:relative; z-index:1; height:100%;}
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      box-shadow: 0 12px 34px rgba(0,0,0,.06);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Модалка (пока оставил, но можно убрать если не нужна) */
     .modal-backdrop{
       position: fixed; inset: 0;
       background: rgba(0,0,0,.55);
@@ -113,7 +110,7 @@
     }
     .modal-backdrop.open{display:flex;}
     .modal{
-      width: min(720px, 100%);
+      width: min(680px, 100%);
       border-radius: 26px;
       background: #fff;
       border: 1px solid rgba(0,0,0,.12);
@@ -131,426 +128,165 @@
       width: 40px;height:40px;border-radius: 999px;
       border: 1px solid rgba(0,0,0,.12);
       display:inline-flex;align-items:center;justify-content:center;
-      background: rgba(255,255,255,.8);
+      background: rgba(255,255,255,.9);
     }
-    .sticky-bar{
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      z-index: 50;
-      display: grid;
-      gap: 10px;
-    }
-    .fab{
-      width: 52px;height: 52px;border-radius: 999px;
-      display:flex;align-items:center;justify-content:center;
-      background: rgba(255,255,255,.86);
-      border: 1px solid var(--line);
-      box-shadow: 0 16px 44px rgba(0,0,0,.12);
-    }
-    .fab-main{
-      width:auto;height:auto;
-      padding: 12px 14px;
-      border-radius: 999px;
-      font-weight: 900;
-      background: #0f0f10;
-      color:#fff;
-      box-shadow: 0 18px 52px rgba(0,0,0,.18);
-    }
-    @media (max-width: 640px){
-      .hero-media{min-height: 640px;}
-      .sticky-bar{right:12px;bottom:12px;}
+
+    @media (max-width: 768px){
+      .hero{min-height: 720px;}
+      .hero::after{
+        background:
+          linear-gradient(180deg,
+            rgba(246,246,245,.98) 0%,
+            rgba(246,246,245,.92) 50%,
+            rgba(246,246,245,.35) 78%,
+            rgba(246,246,245,.0) 100%);
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- TOP BAR -->
+  <!-- HEADER -->
   <header class="container-fix pt-6">
     <div class="flex items-center justify-between gap-3">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-2xl bg-black text-white flex items-center justify-center font-black">F</div>
         <div>
           <div class="font-black tracking-tight">FOT</div>
-          <div class="text-xs muted -mt-0.5">Студия дизайна интерьера • Бишкек</div>
+          <div class="text-xs muted -mt-0.5">Студия дизайна интерьера</div>
         </div>
       </div>
 
-      <div class="hidden md:flex items-center gap-2">
+      <nav class="hidden md:flex items-center gap-2">
+        <a class="btn btn-ghost" href="#about">О студии</a>
         <a class="btn btn-ghost" href="#portfolio">Портфолио</a>
-        <a class="btn btn-ghost" href="#packages">Пакеты</a>
-        <a class="btn btn-ghost" href="#faq">FAQ</a>
-        <button class="btn btn-primary" data-open="leadModal" data-lead-title="Получить консультацию">Оставить заявку</button>
-      </div>
+        <button class="btn btn-primary" data-open="leadModal" data-lead-title="Получить консультацию">Консультация</button>
+      </nav>
 
       <button class="md:hidden btn btn-primary" data-open="leadModal" data-lead-title="Оставить заявку">Заявка</button>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="container-fix mt-6">
-    <div class="hero-media">
-      <!-- Замени картинку на свою (портфолио/рендер) -->
-      <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1800&q=80" alt="FOT интерьер" />
-      <div class="relative z-10 p-6 md:p-10">
-        <div class="max-w-xl">
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="badge">Дизайн интерьера под ключ</span>
-            <span class="badge">Чертежи + комплектация</span>
-            <span class="badge">Авторский надзор</span>
-          </div>
+  <section class="container-fix">
+    <div class="hero mt-6">
+      <!-- HERO_BG: замени ссылку на свою картинку -->
+      <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=2400&q=80');"></div>
 
+      <div class="hero-inner p-6 md:p-10">
+        <div class="max-w-xl">
           <h1 class="text-4xl md:text-5xl font-black leading-[1.02] tracking-tight">
-            Дизайн интерьера, который продуман до миллиметра
+            Современный дизайн интерьера<br class="hidden md:block"> для квартир и домов
           </h1>
+
           <p class="muted mt-4 text-base md:text-lg leading-relaxed">
-            Квартиры и дома в Бишкеке: создаём понятный дизайн-проект, чтобы ремонт шёл без переделок и лишних трат.
+            Спроектируем интерьер так, чтобы ремонт прошёл спокойно: логичная планировка, точные чертежи и единый стиль.
           </p>
 
-          <div class="mt-6 flex flex-col sm:flex-row gap-3">
-            <button class="btn btn-primary" data-open="quizModal" data-lead-title="Подобрать формат дизайна">
-              Рассчитать стоимость
-              <span aria-hidden="true">→</span>
-            </button>
+          <!-- Мини-лидформа: только имя + телефон -->
+          <div class="card mt-6 p-5 md:p-6">
+            <div class="font-black text-lg tracking-tight">Бесплатная консультация</div>
+            <div class="muted text-sm mt-1">Оставьте контакт — свяжемся и уточним детали.</div>
+
+            <form class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3 js-lead-form" data-form-name="hero">
+              <input class="field" name="name" placeholder="Ваше имя" autocomplete="name" />
+              <input class="field" name="phone" placeholder="Телефон" autocomplete="tel" required />
+              <button class="btn btn-primary w-full" type="submit">Отправить</button>
+              <div class="md:col-span-3 hidden text-sm font-bold js-status"></div>
+              <div class="md:col-span-3 text-xs muted leading-relaxed">
+                Нажимая кнопку, вы соглашаетесь на обработку данных.
+              </div>
+            </form>
+          </div>
+
+          <div class="mt-4">
             <a class="btn btn-ghost" href="#portfolio">Смотреть портфолио</a>
           </div>
         </div>
-
-        <!-- HERO LEADFORM (встроенная) -->
-        <div class="mt-8 max-w-xl glass p-5 md:p-6">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <div class="font-black text-lg tracking-tight">Быстрый расчёт</div>
-              <div class="muted text-sm mt-1">Оставьте номер — уточним площадь и пришлём стоимость.</div>
-            </div>
-            <span class="badge">1 минута</span>
-          </div>
-
-          <form class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3 js-lead-form" data-form-name="hero">
-            <input class="field" name="name" placeholder="Ваше имя" autocomplete="name" />
-            <input class="field" name="phone" placeholder="Телефон (WhatsApp)" autocomplete="tel" required />
-            <button class="btn btn-primary w-full" type="submit">Получить расчёт</button>
-
-            <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-3">
-              <select class="field" name="objectType">
-                <option value="" selected>Тип объекта</option>
-                <option>Квартира</option>
-                <option>Дом</option>
-                <option>Коммерция</option>
-              </select>
-              <input class="field" name="area" placeholder="Площадь, м² (примерно)" />
-              <select class="field" name="messenger">
-                <option value="WhatsApp" selected>Связь: WhatsApp</option>
-                <option value="Telegram">Telegram</option>
-                <option value="Звонок">Звонок</option>
-              </select>
-            </div>
-
-            <div class="md:col-span-3 text-xs muted leading-relaxed">
-              Нажимая кнопку, вы соглашаетесь на обработку данных. Без спама.
-            </div>
-
-            <div class="md:col-span-3 hidden text-sm font-bold js-status"></div>
-          </form>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <!-- TRUST / BENEFITS -->
-  <section class="container-fix mt-10">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="soft p-6">
-        <div class="font-black text-lg">Понятные чертежи</div>
-        <div class="muted mt-2 leading-relaxed">Строители получают точные планы, узлы и спецификации — меньше ошибок и переделок.</div>
-        <button class="btn btn-ghost mt-4" data-open="leadModal" data-lead-title="Получить консультацию по проекту">Консультация</button>
+  <!-- CLEAN SECTIONS (минимально, аккуратно) -->
+  <section id="about" class="container-fix mt-12">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div class="card p-6">
+        <div class="font-black text-lg">Планировка</div>
+        <p class="muted mt-2 leading-relaxed">Оптимизируем пространство и сценарии жизни — удобно каждый день.</p>
       </div>
-      <div class="soft p-6">
-        <div class="font-black text-lg">Комплектация</div>
-        <div class="muted mt-2 leading-relaxed">Подбор материалов, мебели и света под бюджет. Составляем список и аналоги.</div>
-        <button class="btn btn-ghost mt-4" data-open="leadModal" data-lead-title="Подбор материалов и мебели">Хочу подбор</button>
+      <div class="card p-6">
+        <div class="font-black text-lg">Чертежи</div>
+        <p class="muted mt-2 leading-relaxed">Понятный комплект документов для строителей — меньше ошибок и переделок.</p>
       </div>
-      <div class="soft p-6">
-        <div class="font-black text-lg">Авторский надзор</div>
-        <div class="muted mt-2 leading-relaxed">Контроль реализации, ответы строителям, правки по месту — чтобы получилось как на картинке.</div>
-        <button class="btn btn-ghost mt-4" data-open="leadModal" data-lead-title="Авторский надзор">Подключить</button>
+      <div class="card p-6">
+        <div class="font-black text-lg">Стиль</div>
+        <p class="muted mt-2 leading-relaxed">Цельный визуал: материалы, свет, мебель — всё собираем в одну систему.</p>
       </div>
     </div>
   </section>
 
-  <!-- PORTFOLIO -->
-  <section id="portfolio" class="container-fix mt-14">
+  <section id="portfolio" class="container-fix mt-12 pb-20">
     <div class="flex items-end justify-between gap-3">
       <div>
         <h2 class="text-3xl md:text-4xl font-black tracking-tight">Портфолио</h2>
-        <p class="muted mt-2">Карточки можно наполнять фото из Instagram (как портфолио) + кнопка заявки в каждой.</p>
+        <p class="muted mt-2">Пока здесь заглушки. Потом заменим на твои проекты (карточки “как портфолио”).</p>
       </div>
-      <button class="btn btn-primary hidden md:inline-flex" data-open="leadModal" data-lead-title="Хочу похожий интерьер">Хочу похожий интерьер</button>
+      <button class="btn btn-primary hidden md:inline-flex" data-open="leadModal" data-lead-title="Хочу похожий интерьер">
+        Хочу похожий интерьер
+      </button>
     </div>
 
     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <!-- Project Card -->
-      <article class="glass overflow-hidden">
-        <div class="aspect-[4/3] bg-[#e8e8e7]">
-          <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1400&q=80" alt="Проект 1">
-        </div>
+      <article class="card overflow-hidden">
+        <div class="aspect-[4/3] bg-[#ececeb]"></div>
         <div class="p-5">
-          <div class="flex items-center justify-between gap-2">
-            <div class="font-black">Квартира • 72 м²</div>
-            <span class="badge">Современный</span>
-          </div>
-          <p class="muted text-sm mt-2 leading-relaxed">Спокойная палитра, скрытые системы хранения, световые сценарии.</p>
-          <div class="mt-4 flex gap-2">
-            <button class="btn btn-primary w-full" data-open="leadModal" data-lead-title="Хочу похожий интерьер: Квартира 72 м²">Хочу такой</button>
-          </div>
+          <div class="font-black">Проект #1</div>
+          <div class="muted text-sm mt-1">Квартира • 72 м²</div>
+          <button class="btn btn-ghost w-full mt-4" data-open="leadModal" data-lead-title="Проект #1 — хочу похожий интерьер">
+            Узнать стоимость
+          </button>
         </div>
       </article>
 
-      <article class="glass overflow-hidden">
-        <div class="aspect-[4/3] bg-[#e8e8e7]">
-          <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1549187774-b4e9b0445b41?auto=format&fit=crop&w=1400&q=80" alt="Проект 2">
-        </div>
+      <article class="card overflow-hidden">
+        <div class="aspect-[4/3] bg-[#ececeb]"></div>
         <div class="p-5">
-          <div class="flex items-center justify-between gap-2">
-            <div class="font-black">Дом • 140 м²</div>
-            <span class="badge">Тёплый</span>
-          </div>
-          <p class="muted text-sm mt-2 leading-relaxed">Натуральные материалы, дерево, мягкий свет, максимум уюта.</p>
-          <div class="mt-4 flex gap-2">
-            <button class="btn btn-primary w-full" data-open="leadModal" data-lead-title="Хочу похожий интерьер: Дом 140 м²">Хочу такой</button>
-          </div>
+          <div class="font-black">Проект #2</div>
+          <div class="muted text-sm mt-1">Дом • 140 м²</div>
+          <button class="btn btn-ghost w-full mt-4" data-open="leadModal" data-lead-title="Проект #2 — хочу похожий интерьер">
+            Узнать стоимость
+          </button>
         </div>
       </article>
 
-      <article class="glass overflow-hidden">
-        <div class="aspect-[4/3] bg-[#e8e8e7]">
-          <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1400&q=80" alt="Проект 3">
-        </div>
+      <article class="card overflow-hidden">
+        <div class="aspect-[4/3] bg-[#ececeb]"></div>
         <div class="p-5">
-          <div class="flex items-center justify-between gap-2">
-            <div class="font-black">Квартира • 48 м²</div>
-            <span class="badge">Минимал</span>
-          </div>
-          <p class="muted text-sm mt-2 leading-relaxed">Оптимизация пространства, встроенная мебель, чистые линии.</p>
-          <div class="mt-4 flex gap-2">
-            <button class="btn btn-primary w-full" data-open="leadModal" data-lead-title="Хочу похожий интерьер: Квартира 48 м²">Хочу такой</button>
-          </div>
+          <div class="font-black">Проект #3</div>
+          <div class="muted text-sm mt-1">Квартира • 48 м²</div>
+          <button class="btn btn-ghost w-full mt-4" data-open="leadModal" data-lead-title="Проект #3 — хочу похожий интерьер">
+            Узнать стоимость
+          </button>
         </div>
       </article>
     </div>
-
-    <div class="mt-6">
-      <button class="btn btn-ghost w-full" data-open="leadModal" data-lead-title="Хочу подборку примеров под мой бюджет">
-        Получить 3 примера под мой бюджет
-      </button>
-    </div>
   </section>
 
-  <!-- PACKAGES -->
-  <section id="packages" class="container-fix mt-14">
-    <div>
-      <h2 class="text-3xl md:text-4xl font-black tracking-tight">Пакеты</h2>
-      <p class="muted mt-2">Можно поставить “от … / м²” позже. Сейчас — структура.</p>
-    </div>
-
-    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <div class="soft p-6">
-        <div class="font-black text-xl">Базовый</div>
-        <div class="muted mt-2 text-sm">Планировка + концепция</div>
-        <ul class="mt-4 space-y-2 text-sm">
-          <li>• Обмер и ТЗ</li>
-          <li>• 2–3 варианта планировки</li>
-          <li>• Коллаж/концепция</li>
-        </ul>
-        <button class="btn btn-primary w-full mt-5" data-open="leadModal" data-lead-title="Пакет: Базовый — узнать стоимость">Узнать стоимость</button>
-      </div>
-
-      <div class="glass p-6">
-        <div class="flex items-center justify-between">
-          <div class="font-black text-xl">Полный</div>
-          <span class="badge">Популярно</span>
-        </div>
-        <div class="muted mt-2 text-sm">Дизайн-проект + чертежи</div>
-        <ul class="mt-4 space-y-2 text-sm">
-          <li>• Визуализации</li>
-          <li>• Полный комплект чертежей</li>
-          <li>• Спецификации</li>
-        </ul>
-        <button class="btn btn-primary w-full mt-5" data-open="quizModal" data-lead-title="Пакет: Полный — рассчитать стоимость">Рассчитать</button>
-      </div>
-
-      <div class="soft p-6">
-        <div class="font-black text-xl">Под ключ</div>
-        <div class="muted mt-2 text-sm">Проект + комплектация + надзор</div>
-        <ul class="mt-4 space-y-2 text-sm">
-          <li>• Подбор материалов/мебели</li>
-          <li>• Ведение реализации</li>
-          <li>• Контроль качества и сроков</li>
-        </ul>
-        <button class="btn btn-primary w-full mt-5" data-open="leadModal" data-lead-title="Пакет: Под ключ — консультация">Консультация</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- BIG QUIZ FORM (Luxar-like main lead) -->
-  <section class="container-fix mt-14">
-    <div class="glass p-6 md:p-8">
-      <div class="flex items-start justify-between gap-4 flex-wrap">
-        <div>
-          <h3 class="text-2xl md:text-3xl font-black tracking-tight">Подберите формат дизайна за 1 минуту</h3>
-          <p class="muted mt-2">Ответьте на 4 вопроса — пришлём ориентир по стоимости и срокам.</p>
-        </div>
-        <span class="badge">Главная лидформа</span>
-      </div>
-
-      <form class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 js-lead-form" data-form-name="main">
-        <select class="field" name="objectType" required>
-          <option value="" selected disabled>Тип объекта *</option>
-          <option>Квартира</option>
-          <option>Дом</option>
-          <option>Коммерция</option>
-        </select>
-
-        <input class="field" name="area" placeholder="Площадь, м² *" required />
-
-        <select class="field" name="stage" required>
-          <option value="" selected disabled>Стадия ремонта *</option>
-          <option>С нуля (черновая)</option>
-          <option>Идёт ремонт</option>
-          <option>Нужен редизайн</option>
-        </select>
-
-        <select class="field" name="timeline" required>
-          <option value="" selected disabled>Когда старт? *</option>
-          <option>В ближайшие 2 недели</option>
-          <option>В этом месяце</option>
-          <option>Через 1–3 месяца</option>
-          <option>Пока присматриваюсь</option>
-        </select>
-
-        <input class="field md:col-span-1" name="name" placeholder="Ваше имя" />
-        <input class="field md:col-span-1" name="phone" placeholder="Телефон (WhatsApp) *" required />
-
-        <select class="field md:col-span-2" name="messenger">
-          <option value="WhatsApp" selected>Связь: WhatsApp</option>
-          <option value="Telegram">Связь: Telegram</option>
-          <option value="Звонок">Связь: Звонок</option>
-        </select>
-
-        <button class="btn btn-primary md:col-span-2" type="submit">Получить расчёт стоимости</button>
-
-        <div class="md:col-span-2 text-xs muted leading-relaxed">
-          Нажимая кнопку, вы соглашаетесь на обработку данных.
-        </div>
-
-        <div class="md:col-span-2 hidden text-sm font-bold js-status"></div>
-      </form>
-    </div>
-  </section>
-
-  <!-- SOCIAL PROOF -->
-  <section class="container-fix mt-14">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <div class="soft p-6">
-        <div class="text-4xl font-black">6+</div>
-        <div class="muted mt-1">лет опыта</div>
-      </div>
-      <div class="soft p-6">
-        <div class="text-4xl font-black">100+</div>
-        <div class="muted mt-1">проектов</div>
-      </div>
-      <div class="soft p-6">
-        <div class="text-4xl font-black">до 20%</div>
-        <div class="muted mt-1">экономии на ремонте за счёт проекта</div>
-      </div>
-    </div>
-
-    <div class="mt-6 soft p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-      <div>
-        <div class="font-black text-xl">Хотите 3 примера под ваш бюджет?</div>
-        <div class="muted mt-1">Скинем подборку работ и ориентир по стоимости.</div>
-      </div>
-      <button class="btn btn-primary" data-open="leadModal" data-lead-title="Получить 3 примера под мой бюджет">Получить подборку</button>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="container-fix mt-14 pb-24">
-    <div>
-      <h2 class="text-3xl md:text-4xl font-black tracking-tight">FAQ</h2>
-      <p class="muted mt-2">Коротко закрываем основные вопросы.</p>
-    </div>
-
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-      <details class="soft p-6">
-        <summary class="font-black cursor-pointer">Сколько длится дизайн-проект?</summary>
-        <p class="muted mt-2 leading-relaxed">В среднем 2–6 недель, зависит от площади и этапов согласования.</p>
-        <button class="btn btn-ghost mt-4" data-open="leadModal" data-lead-title="Сроки дизайн-проекта — хочу уточнить">Уточнить сроки</button>
-      </details>
-
-      <details class="soft p-6">
-        <summary class="font-black cursor-pointer">Что входит в полный пакет?</summary>
-        <p class="muted mt-2 leading-relaxed">Планировка, концепция, визуализации, чертежи и спецификации для реализации.</p>
-        <button class="btn btn-ghost mt-4" data-open="leadModal" data-lead-title="Что входит в проект — хочу консультацию">Консультация</button>
-      </details>
-
-      <details class="soft p-6">
-        <summary class="font-black cursor-pointer">Делаете авторский надзор?</summary>
-        <p class="muted mt-2 leading-relaxed">Да. Контроль реализации, ответы строителям, корректировки по месту.</p>
-        <button class="btn btn-ghost mt-4" data-open="leadModal" data-lead-title="Авторский надзор — хочу подключить">Подключить</button>
-      </details>
-
-      <details class="soft p-6">
-        <summary class="font-black cursor-pointer">Можно ли начать с планировки?</summary>
-        <p class="muted mt-2 leading-relaxed">Да, часто стартуем с планировочного решения, а дальше расширяем до полного проекта.</p>
-        <button class="btn btn-ghost mt-4" data-open="leadModal" data-lead-title="Начать с планировки — узнать стоимость">Узнать стоимость</button>
-      </details>
-    </div>
-
-    <div class="mt-6">
-      <button class="btn btn-primary w-full" data-open="leadModal" data-lead-title="Не нашёл ответ — задать вопрос">Задать вопрос</button>
-    </div>
-  </section>
-
-  <!-- STICKY CTA -->
-  <div class="sticky-bar">
-    <button class="fab fab-main" data-open="leadModal" data-lead-title="Оставить заявку (sticky)">
-      Оставить заявку
-    </button>
-    <a class="fab" href="https://wa.me/" target="_blank" rel="noopener" title="WhatsApp">
-      <span class="font-black">WA</span>
-    </a>
-    <a class="fab" href="https://t.me/" target="_blank" rel="noopener" title="Telegram">
-      <span class="font-black">TG</span>
-    </a>
-    <a class="fab" href="tel:+996000000000" title="Позвонить">
-      <span class="font-black">☎</span>
-    </a>
-  </div>
-
-  <!-- MODAL: Simple lead -->
+  <!-- MODAL (простая лидформа) -->
   <div class="modal-backdrop" id="leadModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
       <div class="modal-header">
         <div>
           <div id="leadTitle" class="font-black text-xl tracking-tight">Оставить заявку</div>
-          <div class="muted text-sm mt-1">Оставьте номер — свяжемся в удобном мессенджере.</div>
+          <div class="muted text-sm mt-1">Имя и номер — и мы свяжемся.</div>
         </div>
         <button class="xbtn" data-close="leadModal" aria-label="Закрыть">✕</button>
       </div>
       <div class="modal-body">
         <form class="grid grid-cols-1 md:grid-cols-2 gap-3 js-lead-form" data-form-name="modal">
-          <input class="field md:col-span-1" name="name" placeholder="Ваше имя" />
-          <input class="field md:col-span-1" name="phone" placeholder="Телефон (WhatsApp) *" required />
-          <select class="field md:col-span-2" name="messenger">
-            <option value="WhatsApp" selected>Связь: WhatsApp</option>
-            <option value="Telegram">Связь: Telegram</option>
-            <option value="Звонок">Связь: Звонок</option>
-          </select>
-          <textarea class="field md:col-span-2" name="comment" rows="3" placeholder="Коротко: квартира/дом, площадь, что нужно"></textarea>
-
+          <input class="field" name="name" placeholder="Ваше имя" autocomplete="name" />
+          <input class="field" name="phone" placeholder="Телефон *" autocomplete="tel" required />
           <input type="hidden" name="leadTitle" value="">
           <button class="btn btn-primary md:col-span-2" type="submit">Отправить</button>
           <div class="md:col-span-2 hidden text-sm font-bold js-status"></div>
@@ -560,88 +296,34 @@
     </div>
   </div>
 
-  <!-- MODAL: Quiz lead -->
-  <div class="modal-backdrop" id="quizModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
-      <div class="modal-header">
-        <div>
-          <div id="quizTitle" class="font-black text-xl tracking-tight">Рассчитать стоимость</div>
-          <div class="muted text-sm mt-1">4 вопроса — и мы пришлём ориентир по цене и срокам.</div>
-        </div>
-        <button class="xbtn" data-close="quizModal" aria-label="Закрыть">✕</button>
-      </div>
-      <div class="modal-body">
-        <form class="grid grid-cols-1 md:grid-cols-2 gap-3 js-lead-form" data-form-name="quiz">
-          <select class="field" name="objectType" required>
-            <option value="" selected disabled>Тип объекта *</option>
-            <option>Квартира</option>
-            <option>Дом</option>
-            <option>Коммерция</option>
-          </select>
-          <input class="field" name="area" placeholder="Площадь, м² *" required />
-          <select class="field" name="stage" required>
-            <option value="" selected disabled>Стадия ремонта *</option>
-            <option>С нуля (черновая)</option>
-            <option>Идёт ремонт</option>
-            <option>Нужен редизайн</option>
-          </select>
-          <select class="field" name="timeline" required>
-            <option value="" selected disabled>Когда старт? *</option>
-            <option>В ближайшие 2 недели</option>
-            <option>В этом месяце</option>
-            <option>Через 1–3 месяца</option>
-            <option>Пока присматриваюсь</option>
-          </select>
-
-          <input class="field" name="name" placeholder="Ваше имя" />
-          <input class="field" name="phone" placeholder="Телефон (WhatsApp) *" required />
-
-          <select class="field md:col-span-2" name="messenger">
-            <option value="WhatsApp" selected>Связь: WhatsApp</option>
-            <option value="Telegram">Связь: Telegram</option>
-            <option value="Звонок">Связь: Звонок</option>
-          </select>
-
-          <input type="hidden" name="leadTitle" value="">
-          <button class="btn btn-primary md:col-span-2" type="submit">Получить расчёт</button>
-          <div class="md:col-span-2 hidden text-sm font-bold js-status"></div>
-          <div class="md:col-span-2 text-xs muted">Нажимая кнопку, вы соглашаетесь на обработку данных.</div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // ========= MODALS =========
+    // MODAL OPEN/CLOSE
     const openModal = (id) => document.getElementById(id)?.classList.add('open');
     const closeModal = (id) => document.getElementById(id)?.classList.remove('open');
 
     document.addEventListener('click', (e) => {
       const openBtn = e.target.closest('[data-open]');
       const closeBtn = e.target.closest('[data-close]');
+
       if (openBtn){
         const id = openBtn.getAttribute('data-open');
         const title = openBtn.getAttribute('data-lead-title') || 'Оставить заявку';
         const modal = document.getElementById(id);
         if (!modal) return;
 
-        // set modal title
-        const titleEl = modal.querySelector('#leadTitle, #quizTitle');
+        const titleEl = modal.querySelector('#leadTitle');
         if (titleEl) titleEl.textContent = title;
 
-        // set hidden leadTitle in form
         const hidden = modal.querySelector('input[name="leadTitle"]');
         if (hidden) hidden.value = title;
 
         openModal(id);
       }
-      if (closeBtn){
-        closeModal(closeBtn.getAttribute('data-close'));
-      }
-      // click outside modal closes
-      const backdrop = e.target.classList.contains('modal-backdrop') ? e.target : null;
-      if (backdrop){
-        backdrop.classList.remove('open');
+
+      if (closeBtn) closeModal(closeBtn.getAttribute('data-close'));
+
+      if (e.target.classList.contains('modal-backdrop')){
+        e.target.classList.remove('open');
       }
     });
 
@@ -651,8 +333,7 @@
       }
     });
 
-    // ========= FORMS (demo submit) =========
-    // Когда будешь готов — подключим реальную отправку (Apps Script / Telegram / CRM).
+    // FORMS (пока демо-отправка)
     const forms = document.querySelectorAll('.js-lead-form');
 
     const showStatus = (form, ok, text) => {
@@ -663,16 +344,6 @@
       s.style.color = ok ? '#0a7a2f' : '#b00020';
     };
 
-    const serialize = (form) => {
-      const fd = new FormData(form);
-      const obj = {};
-      for (const [k, v] of fd.entries()) obj[k] = String(v).trim();
-      obj.formName = form.getAttribute('data-form-name') || '';
-      obj.page = location.href;
-      obj.ts = new Date().toISOString();
-      return obj;
-    };
-
     forms.forEach((form) => {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -681,30 +352,25 @@
         const old = btn ? btn.textContent : '';
         if (btn){ btn.disabled = true; btn.textContent = 'Отправляем…'; }
 
-        const payload = serialize(form);
-
-        // DEMO: имитация отправки
-        await new Promise(r => setTimeout(r, 700));
-
-        // минимальная валидация
-        if (!payload.phone || payload.phone.length < 6){
+        const phone = (form.querySelector('input[name="phone"]')?.value || '').trim();
+        if (!phone || phone.length < 6){
           showStatus(form, false, 'Проверьте номер телефона');
           if (btn){ btn.disabled = false; btn.textContent = old; }
           return;
         }
 
-        showStatus(form, true, 'Заявка отправлена ✅ Мы скоро свяжемся.');
+        // имитация отправки
+        await new Promise(r => setTimeout(r, 600));
+
+        showStatus(form, true, 'Заявка отправлена ✅');
         form.reset();
 
         if (btn){ btn.disabled = false; btn.textContent = old; }
 
-        // если форма внутри модалки — закроем через 1 сек
         const modal = form.closest('.modal-backdrop');
         if (modal){
-          setTimeout(() => modal.classList.remove('open'), 900);
+          setTimeout(() => modal.classList.remove('open'), 800);
         }
-
-        // console.log(payload); // можно включить для проверки
       });
     });
   </script>
