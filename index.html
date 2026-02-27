@@ -653,6 +653,147 @@
         modalSubmit.textContent = oldText;
       }
     });
-  </script>
+  </script><script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3ALrZmWWtsX6Pxu6DHq2nCyqBTgyE-6nMXWyzM4-GK0QgS0mBDS2_BeWhDLUqIVkr/exec";
+
+  const digits = (v)=> (v||"").replace(/[^\d]/g,'');
+  const okPhone = (v)=> digits(v).length >= 9;
+
+  async function sendLead({ name, phone, source, service }) {
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ name, phone, source, service })
+    });
+
+    const text = await res.text();
+    let json = null;
+    try { json = JSON.parse(text); } catch(e){}
+
+    if (!res.ok) throw new Error("HTTP " + res.status + ": " + text);
+    if (json && json.success === false) throw new Error(json.error || "Apps Script error");
+    return json || { success: true };
+  }
+
+  function lockBtn(btn, yes, text) {
+    if (!btn) return;
+    btn.disabled = !!yes;
+    if (text !== undefined) btn.textContent = text;
+  }
+
+  // ===== Form 1 =====
+  const f1 = document.getElementById('leadForm1');
+  const s1 = document.getElementById('formStatus1');
+  const btn1 = document.getElementById('submit1') || f1?.querySelector('button[type="submit"]');
+
+  if (f1) {
+    f1.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name1').value.trim();
+      const phone = document.getElementById('phone1').value.trim();
+
+      if(!name) return s1.textContent = "Введите имя";
+      if(!okPhone(phone)) return s1.textContent = "Проверьте номер";
+
+      const oldText = btn1?.textContent || "Отправить";
+      lockBtn(btn1, true, "Отправляем…");
+      s1.textContent = "";
+
+      try {
+        await sendLead({
+          source: "FOT site",
+          service: "Получить расчет",
+          name, phone
+        });
+
+        s1.textContent = "Готово ✅";
+        f1.reset();
+      } catch (err) {
+        s1.textContent = "Ошибка: " + (err.message || "не отправилось");
+      } finally {
+        lockBtn(btn1, false, oldText);
+      }
+    });
+  }
+
+  // ===== Form 2 =====
+  const f2 = document.getElementById('leadForm2');
+  const s2 = document.getElementById('formStatus2');
+  const btn2 = document.getElementById('submit2') || f2?.querySelector('button[type="submit"]');
+
+  if (f2) {
+    f2.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const servicePick = document.getElementById('service2')?.value || "Консультация";
+      const name = document.getElementById('name2').value.trim();
+      const phone = document.getElementById('phone2').value.trim();
+
+      if(!name) return s2.textContent = "Введите имя";
+      if(!okPhone(phone)) return s2.textContent = "Проверьте номер";
+
+      const oldText = btn2?.textContent || "Отправить";
+      lockBtn(btn2, true, "Отправляем…");
+      s2.textContent = "";
+
+      try {
+        await sendLead({
+          source: "FOT site",
+          service: "Консультация на объекте — " + servicePick,
+          name, phone
+        });
+
+        s2.textContent = "Готово ✅";
+        f2.reset();
+      } catch (err) {
+        s2.textContent = "Ошибка: " + (err.message || "не отправилось");
+      } finally {
+        lockBtn(btn2, false, oldText);
+      }
+    });
+  }
+
+  // ===== Modal form (projects) =====
+  const modalForm = document.getElementById('modalForm');
+  const modalStatus = document.getElementById('modalStatus');
+  const modalSubmit = document.getElementById('modalSubmit') || modalForm?.querySelector('button[type="submit"]');
+
+  let currentProject = "";
+  document.querySelectorAll('button[data-project]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ currentProject = btn.dataset.project || ""; });
+  });
+
+  if (modalForm) {
+    modalForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('modalName').value.trim();
+      const phone = document.getElementById('modalPhone').value.trim();
+
+      if(!name) return modalStatus.textContent = "Введите имя";
+      if(!okPhone(phone)) return modalStatus.textContent = "Проверьте номер";
+
+      const oldText = modalSubmit?.textContent || "Отправить";
+      lockBtn(modalSubmit, true, "Отправляем…");
+      modalStatus.textContent = "";
+
+      try {
+        await sendLead({
+          source: "FOT site",
+          service: "Проект — " + (currentProject || "Узнать больше"),
+          name, phone
+        });
+
+        modalStatus.textContent = "Готово ✅";
+        modalForm.reset();
+      } catch (err) {
+        modalStatus.textContent = "Ошибка: " + (err.message || "не отправилось");
+      } finally {
+        lockBtn(modalSubmit, false, oldText);
+      }
+    });
+  }
+</script>
 </body>
 </html>
